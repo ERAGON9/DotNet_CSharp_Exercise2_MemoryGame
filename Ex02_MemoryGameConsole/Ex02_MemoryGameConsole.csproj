@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D6CBF27B-530C-4282-8308-6EF64AB96D64}</ProjectGuid>
+    <ProjectGuid>{1BDB41FE-8CC3-42C5-93C2-88F534012ED9}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Ex02_Logic</RootNamespace>
-    <AssemblyName>Ex02_Logic</AssemblyName>
+    <RootNamespace>Ex02_MemoryGameConsole</RootNamespace>
+    <AssemblyName>Ex02_MemoryGameConsole</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -34,6 +34,13 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GameLogic\User.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UserInterface\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

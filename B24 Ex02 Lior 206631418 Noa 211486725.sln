@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex02_Logic", "Ex02_Logic\Ex02_Logic.csproj", "{D6CBF27B-530C-4282-8308-6EF64AB96D64}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex02_UserInterface", "Ex02_UserInterface\Ex02_UserInterface.csproj", "{DCEA2153-2FFD-426E-9790-81673072B1A6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ex02_MemoryGameConsole", "Ex02_MemoryGameConsole\Ex02_MemoryGameConsole.csproj", "{1BDB41FE-8CC3-42C5-93C2-88F534012ED9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D6CBF27B-530C-4282-8308-6EF64AB96D64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6CBF27B-530C-4282-8308-6EF64AB96D64}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6CBF27B-530C-4282-8308-6EF64AB96D64}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6CBF27B-530C-4282-8308-6EF64AB96D64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DCEA2153-2FFD-426E-9790-81673072B1A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DCEA2153-2FFD-426E-9790-81673072B1A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DCEA2153-2FFD-426E-9790-81673072B1A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DCEA2153-2FFD-426E-9790-81673072B1A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BDB41FE-8CC3-42C5-93C2-88F534012ED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BDB41FE-8CC3-42C5-93C2-88F534012ED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BDB41FE-8CC3-42C5-93C2-88F534012ED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BDB41FE-8CC3-42C5-93C2-88F534012ED9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
