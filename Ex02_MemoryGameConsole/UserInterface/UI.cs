@@ -13,7 +13,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         public void manageProgram()
         {
-            string Player1Name = RecivePlayerName();
+            string Player1Name = recivePlayerName();
       
             // recieve second player 
             // Recieve board size.
@@ -22,7 +22,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
 
 
-            while (// there still unflip cards || !Q)
+            while ()
             {
                 //print board
 
@@ -53,7 +53,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         }
 
-        public string RecivePlayerName()
+        private string recivePlayerName()
         {
             Console.WriteLine("Please enter your name:");
             string playerName = Console.ReadLine();
@@ -61,19 +61,24 @@ namespace Ex02_MemoryGameConsole.UserInterface
             return playerName;
         }
 
-        public string ReciveSecoundPlayer()
+        private string chooseSecoundPlayer() //אולי שהמחרוזת תהיה בתור משתנה out
         {
+            string name;
             Console.WriteLine("The game is against player or computer? " +
                                 "(enter: player/computer)");
             string opponent = Console.ReadLine();
             if (opponent == "player")
             {
-
+                name = recivePlayerName();
             }
             else
             {
-
+                name = "Computer"; //? לא בטוחה איך מתמודד עם זה בפונקציה
             }
+
+            return name;
         }
+
+        private bool isGameOver
     }
 }
