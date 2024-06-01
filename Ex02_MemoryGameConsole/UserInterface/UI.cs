@@ -1,4 +1,5 @@
-﻿using Ex02_MemoryGameConsole.GameLogic;
+﻿using Ex02.ConsoleUtils;
+using Ex02_MemoryGameConsole.GameLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
         public void manageProgram()
         {
             string Player1Name = RecivePlayerName();
+      
             // recieve second player 
             // Recieve board size.
 
@@ -20,15 +22,34 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
 
 
-            while (true)
+            while (// there still unflip cards || !Q)
             {
-                //draw board
+                //print board
 
-                //get 1 square
+                /*choose square*/
+                //get 1 square   (if press Q)
                 // UI - check valid input
                 // logic - check  if!(in board and not taken)
                 //             UI - print error message
+
+                Screen.Clear();
+                //print board
+
+                /*choose square again*/   //(if press Q)
+                //need to return the square content
+
+                //logic - check if the 2 cards the same
+                //if the same:
+                //   givePoint()    
+
+                // else: (if not the same:)
+                //      UI-show 2 sec, logic - flip back.
+                //      switch current player
+
             }
+
+            // print the ponits of each player- with player win.
+            // if want another game or not.
 
         }
 

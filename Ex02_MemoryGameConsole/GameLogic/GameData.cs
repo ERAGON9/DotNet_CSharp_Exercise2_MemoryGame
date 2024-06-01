@@ -10,6 +10,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
     {
         private User m_player1;
         private User m_player2;
+        int currentPlayer; // change to enum.
 
         public GameData(string name1, string name2)
         {
