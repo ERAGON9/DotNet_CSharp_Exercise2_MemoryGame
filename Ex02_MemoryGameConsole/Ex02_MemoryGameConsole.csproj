@@ -36,11 +36,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameLogic\GameData.cs" />
     <Compile Include="GameLogic\User.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="UserInterface\UI.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UserInterface\" />
+    <Reference Include="Ex02.ConsoleUtils">
+      <HintPath>..\..\..\..\..\..\..\Temp\Ex02.ConsoleUtils.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

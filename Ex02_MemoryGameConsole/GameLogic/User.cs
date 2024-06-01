@@ -9,7 +9,8 @@ namespace Ex02_MemoryGameConsole.GameLogic
     internal class User
     {
         private readonly string m_Name;
-        public string Name {
+        public string Name 
+        {
             get
             {
                 return m_Name;
