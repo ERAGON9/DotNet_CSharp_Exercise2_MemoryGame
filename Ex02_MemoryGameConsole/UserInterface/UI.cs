@@ -10,19 +10,23 @@ namespace Ex02_MemoryGameConsole.UserInterface
 {
     internal class UI
     {
+        private GameData m_GameEngine;
 
-        public void manageProgram()
+        public void runGame()
         {
-            GameData game;
-            string Player1Name, Player2Name;
-            int boardWidth, boardHeight;
 
-            receiveGamePropertiesFromUser(out Player1Name, out Player2Name, out boardWidth, out boardHeight);
-            game = new GameData(Player1Name, Player2Name, boardHeight, boardWidth);
+            try 
+            {
+                SetGameProperties();
+                SetBoardGame();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
 
-
-            while (!isGameOver(gameData))
+            while (!isGameOver())
             {
                 //print board
 
@@ -53,48 +57,81 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         }
 
-
-        private void receiveGamePropertiesFromUser(out string Player1Name, out string Player2Name, out int boardWidth, out int boardHeight)
+        private void SetGameProperties()
         {
-            Player1Name = receivePlayerName();
-            Player2Name = chooseAndReceiveSecoundPlayer();
+            string player1Name, player2Name;
+            bool gameAgainstComputer;
+
+            player1Name = receivePlayerName();
+            player2Name = chooseAndReceiveSecoundPlayer(out gameAgainstComputer);
+            try
+            {
+                m_GameEngine = new GameData(player1Name, player2Name, gameAgainstComputer);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                SetGameProperties();
+            }
+        }
+
+        private void SetBoardGame()
+        {
+            int boardWidth, boardHeight;
+
             boardWidth = receiveBoardWidth();
             boardHeight = receiveBoardHeight();
-
-            //check if even number of squares
+            try
+            {
+                m_GameEngine.InitialCardsMatrix(boardWidth, boardHeight);
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+                SetBoardGame();
+            }
         }
 
         private string receivePlayerName()
         {
-            Console.WriteLine("Please enter your name:");
-            string playerName = Console.ReadLine();
+            string playerName;
+
+            Console.WriteLine("Please enter player name:");
+            playerName = Console.ReadLine();
 
             return playerName;
         }
 
-        private string chooseAndReceiveSecoundPlayer() //אולי שהמחרוזת תהיה בתור משתנה out
+        private string chooseAndReceiveSecoundPlayer(out bool o_AgainstComputer)
         {
-            string name, opponent;
+            string secoundPlayerName, opponent;
 
             Console.WriteLine("The game is against player or computer? " +
                                 "(enter: player/computer)");
             opponent = Console.ReadLine();
             if (opponent == "player")
             {
-                name = receivePlayerName();
+                secoundPlayerName = receivePlayerName();
+                o_AgainstComputer = false;
+            }
+            else if (opponent == "computer")
+            {
+                secoundPlayerName = "Computer";
+                o_AgainstComputer = true;
             }
             else
             {
-                name = "Computer"; //? לא בטוחה איך מתמודד עם זה בפונקציה
+                throw new Exception("Exception: Incorrect option, choose between player " +
+                    " or computer only.");
             }
 
-            return name;
+            return secoundPlayerName;
         }
 
-        private bool isGameOver(GameData i_Game)
+        private bool isGameOver()
         {
             bool gameOver;
-            bool isLeftCardsToChoose = i_Game.isThereUnflippedCards();
+            bool isLeftCardsToChoose = m_GameEngine.IsThereUnflippedCards();
             
             gameOver = !isLeftCardsToChoose;
 
@@ -110,6 +147,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
             return boardWidth;
         }
+
         private int receiveBoardHeight()
         {
             int boardHeight;
@@ -128,7 +166,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
             while (!isValidInput)
             {
-                inputStr = (Console.ReadLine());
+                inputStr = Console.ReadLine();
                 isInteger = int.TryParse(inputStr, out int tmpMeasure);
                 if (!isInteger)
                 {
@@ -149,6 +187,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
             return measure.Value; //Always get value 
         }
+
         //private bool checkIfValidMeasureInput(string i_MeasureStr)
         //{
         //    bool isInteger, isPositive;
