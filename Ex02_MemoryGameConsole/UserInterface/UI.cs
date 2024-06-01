@@ -18,11 +18,11 @@ namespace Ex02_MemoryGameConsole.UserInterface
             // recieve second player 
             // Recieve board size.
 
-            GameData gameData = new GameData(Player1Name,);
+            //GameData gameData = new GameData(Player1Name,);
 
 
 
-            while (// there still unflip cards || !Q)
+            while (true)// there still unflip cards || !Q)
             {
                 //print board
 
@@ -61,19 +61,19 @@ namespace Ex02_MemoryGameConsole.UserInterface
             return playerName;
         }
 
-        public string ReciveSecoundPlayer()
-        {
-            Console.WriteLine("The game is against player or computer? " +
-                                "(enter: player/computer)");
-            string opponent = Console.ReadLine();
-            if (opponent == "player")
-            {
+        //public string ReciveSecoundPlayer()
+        //{
+        //    Console.WriteLine("The game is against player or computer? " +
+        //                        "(enter: player/computer)");
+        //    string opponent = Console.ReadLine();
+        //    if (opponent == "player")
+        //    {
 
-            }
-            else
-            {
+        //    }
+        //    else
+        //    {
 
-            }
-        }
+        //    }
+        //}
     }
 }

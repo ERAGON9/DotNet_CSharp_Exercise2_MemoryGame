@@ -9,11 +9,35 @@ namespace Ex02_MemoryGameConsole.GameLogic
     internal class Card
     {
         private bool isFlipped;
-
-        private char content; //thing later about the char or type thing
-        public Card() 
+        public bool IsFlipped
         {
+            get 
+            {
+                return isFlipped;
+            }
+            set 
+            {
+                isFlipped = value;
+            }
+        }
 
+        private char? content; //think later about the char or type thing.
+        public char? Content
+        {
+            get 
+            {
+                return content;
+            }
+            set 
+            {
+                content = value;
+            }
+        }
+
+        public Card(char i_Data) 
+        {
+            isFlipped = false;
+            content = i_Data;
         }
     }
 }

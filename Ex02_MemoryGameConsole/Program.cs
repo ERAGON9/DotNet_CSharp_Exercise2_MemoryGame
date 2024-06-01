@@ -12,12 +12,12 @@ namespace Ex02_MemoryGameConsole
     {
         public static void Main()
         {
-            UI userInterface = new UI();
+            //UI userInterface = new UI();
 
-            userInterface.manageProgram();
+            //userInterface.manageProgram();
 
-
-
+            GameData gameData = new GameData("Lior", "Noa", 6 , 6);
+            Console.ReadLine();
         }
     }
 }
