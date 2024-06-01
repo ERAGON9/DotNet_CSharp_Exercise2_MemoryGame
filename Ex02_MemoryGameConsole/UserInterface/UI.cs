@@ -13,16 +13,16 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         public void manageProgram()
         {
-            string Player1Name = recivePlayerName();
-      
-            // recieve second player 
-            // Recieve board size.
+            GameData game;
+            string Player1Name, Player2Name;
+            int boardWidth, boardHeight;
 
-            GameData gameData = new GameData(Player1Name,);
+            receiveGamePropertiesFromUser(out Player1Name, out Player2Name, out boardWidth, out boardHeight);
+            game = new GameData(Player1Name, Player2Name, boardWidth, boardHeight);
 
 
 
-            while (!isGameOver())
+            while (!isGameOver(gameData))
             {
                 //print board
 
@@ -53,7 +53,17 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         }
 
-        private string recivePlayerName()
+
+        private void receiveGamePropertiesFromUser(out string Player1Name, out string Player2Name, out int boardWidth, out int boardHeight)
+        {
+            string Player1Name = receivePlayerName();
+            string Player2Name = chooseAndReceiveSecoundPlayer();
+            int boardWidth = receiveBoardWidth();
+            int boardHeight = receiveBoardHeight();
+            //check if even number of squares
+        }
+
+        private string receivePlayerName()
         {
             Console.WriteLine("Please enter your name:");
             string playerName = Console.ReadLine();
@@ -61,7 +71,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
             return playerName;
         }
 
-        private string chooseSecoundPlayer() //אולי שהמחרוזת תהיה בתור משתנה out
+        private string chooseAndReceiveSecoundPlayer() //אולי שהמחרוזת תהיה בתור משתנה out
         {
             string name, opponent;
 
@@ -70,7 +80,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
             opponent = Console.ReadLine();
             if (opponent == "player")
             {
-                name = recivePlayerName();
+                name = receivePlayerName();
             }
             else
             {
@@ -89,5 +99,51 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
             return gameOver;
         }
+
+        private int receiveBoardWidth()
+        {
+            int boardWidth;
+   
+            Console.WriteLine("Enter board width: ");
+            boardWidth = receiveMeasure();
+            
+
+            return boardWidth;
+        }
+
+        private int receiveMeasure()
+        {
+            bool isValidInput = false, isPositive, isInteger;
+            int? measure = null;
+            string inputStr;
+
+            while (!isValidInput)
+            {
+                inputStr = (Console.ReadLine());
+                isInteger = int.TryParse(inputStr, out int tmpMeasure);
+                if (!isInteger)
+                {
+                    Console.WriteLine("Input must be an integer. Try again\n");
+                    continue;
+                }
+
+                isPositive = tmpMeasure > 0;
+                if (!isPositive)
+                {
+                    Console.WriteLine("Input must be an positive. Try again\n");
+                    continue;
+                }
+
+                isValidInput = true;
+                measure = tmpMeasure;
+            }
+
+            return measure.Value; ;
+        }
+        //private bool checkIfValidMeasureInput(string i_MeasureStr)
+        //{
+        //    bool isInteger, isPositive;
+            
+        //}
     }
 }
