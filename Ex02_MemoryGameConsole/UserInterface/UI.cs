@@ -18,7 +18,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
             int boardWidth, boardHeight;
 
             receiveGamePropertiesFromUser(out Player1Name, out Player2Name, out boardWidth, out boardHeight);
-            game = new GameData(Player1Name, Player2Name, boardWidth, boardHeight);
+            game = new GameData(Player1Name, Player2Name, boardHeight, boardWidth);
 
 
 
@@ -56,10 +56,11 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private void receiveGamePropertiesFromUser(out string Player1Name, out string Player2Name, out int boardWidth, out int boardHeight)
         {
-            string Player1Name = receivePlayerName();
-            string Player2Name = chooseAndReceiveSecoundPlayer();
-            int boardWidth = receiveBoardWidth();
-            int boardHeight = receiveBoardHeight();
+            Player1Name = receivePlayerName();
+            Player2Name = chooseAndReceiveSecoundPlayer();
+            boardWidth = receiveBoardWidth();
+            boardHeight = receiveBoardHeight();
+
             //check if even number of squares
         }
 
@@ -106,9 +107,17 @@ namespace Ex02_MemoryGameConsole.UserInterface
    
             Console.WriteLine("Enter board width: ");
             boardWidth = receiveMeasure();
-            
 
             return boardWidth;
+        }
+        private int receiveBoardHeight()
+        {
+            int boardHeight;
+
+            Console.WriteLine("Enter board height: ");
+            boardHeight = receiveMeasure();
+
+            return boardHeight;
         }
 
         private int receiveMeasure()
@@ -138,7 +147,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 measure = tmpMeasure;
             }
 
-            return measure.Value; ;
+            return measure.Value; //Always get value 
         }
         //private bool checkIfValidMeasureInput(string i_MeasureStr)
         //{
