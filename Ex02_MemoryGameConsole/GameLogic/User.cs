@@ -14,7 +14,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
             get
             {
                 return m_Name;
-            }
+            } 
         }
 
         public User(string i_UserName)
