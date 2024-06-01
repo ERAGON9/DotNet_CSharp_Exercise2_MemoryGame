@@ -22,12 +22,12 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
 
 
-            while ()
+            while (!isGameOver())
             {
                 //print board
 
                 /*choose square*/
-                //get 1 square   (if press Q)
+                //get 1 square   (if press Q - break)
                 // UI - check valid input
                 // logic - check  if!(in board and not taken)
                 //             UI - print error message
@@ -63,10 +63,11 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private string chooseSecoundPlayer() //אולי שהמחרוזת תהיה בתור משתנה out
         {
-            string name;
+            string name, opponent;
+
             Console.WriteLine("The game is against player or computer? " +
                                 "(enter: player/computer)");
-            string opponent = Console.ReadLine();
+            opponent = Console.ReadLine();
             if (opponent == "player")
             {
                 name = recivePlayerName();
@@ -79,6 +80,14 @@ namespace Ex02_MemoryGameConsole.UserInterface
             return name;
         }
 
-        private bool isGameOver
+        private bool isGameOver(GameData i_Game)
+        {
+            bool gameOver;
+            bool isLeftCardsToChoose = i_Game.isThereUnflippedCards();
+            
+            gameOver = !isLeftCardsToChoose;
+
+            return gameOver;
+        }
     }
 }
