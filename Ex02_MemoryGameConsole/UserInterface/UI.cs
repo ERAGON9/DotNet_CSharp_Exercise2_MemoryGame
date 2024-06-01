@@ -185,13 +185,31 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 measure = tmpMeasure;
             }
 
-            return measure.Value; //Always get value 
+            return measure.Value; //Always get value because always first iteration happens
         }
 
         //private bool checkIfValidMeasureInput(string i_MeasureStr)
         //{
         //    bool isInteger, isPositive;
-            
+
         //}
+
+
+        //change accordings to the board in the instructions
+        public void PrintBoard(Card[,] i_CardsMatrix)
+        {
+            int rows = i_CardsMatrix.GetLength(0);
+            int cols = i_CardsMatrix.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write(i_CardsMatrix[i, j].Content + " ");
+                }
+                Console.WriteLine();
+            }
+        }
     }
+
 }
