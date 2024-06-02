@@ -42,8 +42,8 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 {
                     break;
                 }
-                m_GameEngine.FlipCard2InCurrentTurn(chosenSquare2);
 
+                m_GameEngine.FlipCard2InCurrentTurn(chosenSquare2);
                 Screen.Clear();
                 printBoard();
 
@@ -208,7 +208,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
         private bool isGameOver()
         {
             bool gameOver;
-            bool isLeftCardsToChoose = m_GameEngine.IsThereUnflippedCards();
+            bool isLeftCardsToChoose = m_GameEngine.IsThereUnflippedCardsOnBoard();
             
             gameOver = !isLeftCardsToChoose;
 
@@ -272,12 +272,13 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private void printBoard()
         {
-            int rows = m_GameEngine.Board.GetLength(0);
-            int cols = m_GameEngine.Board.GetLength(1);
+            GameBoard board = m_GameEngine.Board;
+            int rows = board.Height;
+            int cols = board.Width;
 
             printBoardFirstRow(cols);
             printBoardEqualsRow(cols);
-            printBoardCardsRow(rows, cols);
+            printBoardCardsRow(rows, cols, board);
         }
 
         private void printBoardFirstRow(int i_Cols)
@@ -311,8 +312,9 @@ namespace Ex02_MemoryGameConsole.UserInterface
             Console.WriteLine(stringToPrint);
         }
 
-        private void printBoardCardsRow(int i_Rows, int i_Cols )
+        private void printBoardCardsRow(int i_Rows, int i_Cols, GameBoard i_board)
         {
+
             StringBuilder stringToPrint = new StringBuilder();
 
             for (int i = 0; i < i_Rows; i++)
@@ -321,13 +323,13 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 for (int j = 0; j < i_Cols; j++)
                 {
                     stringToPrint.Append("| ");
-                    if (m_GameEngine.CardsMatrix[i,j].IsFlipped == false)
+                    if (i_board.CardsMatrix[i,j].IsFlipped == false)
                     {
                         stringToPrint.Append(' ');
                     }
                     else
                     {
-                        stringToPrint.Append(m_GameEngine.CardsMatrix[i, j].Content);
+                        stringToPrint.Append(i_board.CardsMatrix[i, j].Content);
                     }
 
                     stringToPrint.Append(' ');
@@ -342,7 +344,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private void printStatistics()
         {
-            
+            //TO DO
         }
     }
 }

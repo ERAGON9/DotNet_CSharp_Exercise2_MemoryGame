@@ -44,8 +44,9 @@ namespace Ex02_MemoryGameConsole.GameLogic
             CurrentTurn.FlipCard1();
         }
 
-        public void FlipCard2InCurrentTurn()
+        public void FlipCard2InCurrentTurn(string i_Square)
         {
+            CurrentTurn.Card2 = Board.GetCard(i_Square);
             CurrentTurn.FlipCard2();
         }
 
@@ -78,6 +79,11 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
 
             return playerName;
+        }
+
+        public bool IsThereUnflippedCardsOnBoard()
+        {
+            return m_Board.IsThereUnflippedCards();
         }
     }
 }
