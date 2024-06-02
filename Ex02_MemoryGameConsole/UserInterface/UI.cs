@@ -27,7 +27,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
                     printBoard();
 
                     /*choose square*/
-                    //get 1 square   (if press Q - break)
+                    // get 1 square   (if press Q - break)
                     // UI - check valid input
                     // logic - check  if!(in board and not taken)
                     //             UI - print error message
@@ -193,13 +193,10 @@ namespace Ex02_MemoryGameConsole.UserInterface
         //    bool isInteger, isPositive;
         //}
 
-
-        //change accordings to the board in the instructions
         private void printBoard()
         {
             int rows = m_GameEngine.CardsMatrix.GetLength(0);
             int cols = m_GameEngine.CardsMatrix.GetLength(1);
-            StringBuilder stringToPrint = new StringBuilder();
 
             printBoardFirstRow(cols);
             printBoardEqualsRow(cols);
@@ -255,5 +252,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 stringToPrint.Clear();
             }
         }
+
+
     }
 }
