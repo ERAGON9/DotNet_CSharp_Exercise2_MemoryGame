@@ -13,12 +13,19 @@ namespace Ex02_MemoryGameConsole.GameLogic
         private eCurrentCard m_CurrentCard;
         private eCurrentPlayer m_CurrentPlayer;
 
+        public void FlipCard()
+        {
+
+        }
+
+
         public void FlipCard1()
         {
             m_Card1.FlipCard();
+            m_CurrentCard = eCurrentCard.Card2; //maybe add on Ctor for update card1 first, then no need to do it in FlipCard2
         }
 
-        public void flipCard2()
+        public void FlipCard2()
         {
             m_Card2.FlipCard();
         }

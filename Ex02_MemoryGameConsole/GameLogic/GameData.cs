@@ -33,6 +33,10 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
         }
 
+        public void FlipCard()
+        {
+            CurrentTurn.flipCard()
+        }
         public GameData(string i_NamePlayer1, string i_NamePlayer2, bool i_AgainstComputer)
         {
             m_Player1 = new User(i_NamePlayer1);
