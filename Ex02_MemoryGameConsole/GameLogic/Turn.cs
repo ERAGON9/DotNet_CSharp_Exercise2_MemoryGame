@@ -14,15 +14,28 @@ namespace Ex02_MemoryGameConsole.GameLogic
         //private eCurrentCard m_CurrentCard = eCurrentCard.Card1;
         private eCurrentPlayer m_CurrentPlayer;
 
+        public Turn()
+        {
+            m_CurrentPlayer = eCurrentPlayer.Player1;
+        }
+
         public eCurrentPlayer CurrentPlayer
         {
             get
             {
                 return m_CurrentPlayer;
             }
-            set
+        }
+
+        public void SwitchPlayerTurn()
+        {
+            if (m_CurrentPlayer == eCurrentPlayer.Player1)
             {
-                m_CurrentPlayer = value;
+                m_CurrentPlayer = eCurrentPlayer.Player2;
+            }
+            else
+            {
+                m_CurrentPlayer = eCurrentPlayer.Player1;
             }
         }
 
@@ -32,10 +45,14 @@ namespace Ex02_MemoryGameConsole.GameLogic
             {
                 return m_Card1;
             }
-            set
+            set 
             {
                 m_Card1 = value;
             }
+        }
+        public void ResetCard1()
+        {
+            m_Card1 = null;
         }
         public Card Card2
         {
@@ -47,6 +64,10 @@ namespace Ex02_MemoryGameConsole.GameLogic
             {
                 m_Card2 = value;
             }
+        }
+        public void ResetCard2()
+        {
+            m_Card2 = null;
         }
 
         public void FlipCard1()
@@ -60,7 +81,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
             m_Card2.FlipCard();
         }
         
-
         public void UnflippedCards()
         {
             m_Card1.UnFlipCard();

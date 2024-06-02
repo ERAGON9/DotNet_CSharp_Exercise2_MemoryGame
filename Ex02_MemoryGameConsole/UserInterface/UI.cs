@@ -22,21 +22,19 @@ namespace Ex02_MemoryGameConsole.UserInterface
             {
                 Screen.Clear();
                 printBoard();
-
-               
-                Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn:");
-                /*choose square*/
+                Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
+                                  " first square:");
                 string chosenSquare1 = getValidSquareFromPlayer();
                 if (chosenSquare1 == "Q")
                 {
                     break;
                 }
-                m_GameEngine.FlipCard1InCurrentTurn(chosenSquare1);
 
+                m_GameEngine.FlipCard1InCurrentTurn(chosenSquare1);
                 Screen.Clear();
                 printBoard();
-
-                /*choose square again*/
+                Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
+                                  " secound square:");
                 string chosenSquare2 = getValidSquareFromPlayer();
                 if (chosenSquare2 == "Q")
                 {
@@ -46,15 +44,12 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 m_GameEngine.FlipCard2InCurrentTurn(chosenSquare2);
                 Screen.Clear();
                 printBoard();
-
-                m_GameEngine.RunTurn();
-                //logic - check if the 2 cards the same
-                //if the same:
-                //   givePoint()    
-
-                // else: (if not the same:)
-                //      UI-show 2 sec, logic - flip back.
-                //      switch current player
+                bool isAPair = m_GameEngine.IsCardsTheSame();
+                m_GameEngine.OperatesByChosenCards();
+                if (!isAPair)
+                {
+                    System.Threading.Thread.Sleep(2000);
+                }
 
                 m_StillPlaying = !isGameOver();
             }
@@ -132,7 +127,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
             if (i_Square.Length != 2 || !char.IsLetter(i_Square[0])
                 || !char.IsDigit(i_Square[1]))
             {
-                Console.WriteLine("Input is not 1 letter and 1 digit. (at the form of: B2)");
+                Console.WriteLine("Input is not 1 letter and 1 digit. (form of: B2)");
                 isValid = false;
             }
 
@@ -161,7 +156,8 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 boardWidth = receiveBoardWidth();
                 boardHeight = receiveBoardHeight();
 
-                initialSucceeded = m_GameEngine.TryInitialBoard(boardHeight, boardWidth, out errorMessage);
+                initialSucceeded = m_GameEngine.TryInitialBoard(boardHeight,
+                                                boardWidth, out errorMessage);
                 if (!initialSucceeded)
                 {
                     Console.WriteLine(errorMessage + " try again.");
@@ -181,25 +177,31 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private string chooseAndReceiveSecoundPlayer(out bool o_AgainstComputer)
         {
-            string secoundPlayerName, opponent;
-
-            Console.WriteLine("The game is against player or computer? " +
-                                "(enter: player/computer)");
-            opponent = Console.ReadLine();
-            if (opponent == "player")
+            string secoundPlayerName = string.Empty, opponent;
+            bool validInput = false;
+            o_AgainstComputer = false; // will be set to true if necessary inside
+                                       // the while loop.
+            while (!validInput)
             {
-                secoundPlayerName = receivePlayerName();
-                o_AgainstComputer = false;
-            }
-            else if (opponent == "computer")
-            {
-                secoundPlayerName = "Computer";
-                o_AgainstComputer = true;
-            }
-            else
-            {
-                throw new Exception("Exception: Incorrect option, choose between player " +
-                    " or computer only.");
+                Console.WriteLine("The game is against player or computer? " +
+                                  "(enter: player/computer)");
+                opponent = Console.ReadLine();
+                if (opponent == "player")
+                {
+                    secoundPlayerName = receivePlayerName();
+                    validInput = true;
+                }
+                else if (opponent == "computer")
+                {
+                    secoundPlayerName = "Computer";
+                    o_AgainstComputer = true;
+                    validInput = true;
+                }
+                else
+                {
+                    Console.WriteLine("Incorrect option, choose between player " +
+                                      "or computer only, try again.");
+                }
             }
 
             return secoundPlayerName;
@@ -262,13 +264,8 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 measure = tmpMeasure;
             }
 
-            return measure.Value; //Always get value because always first iteration happens
+            return measure.Value; //Always get value because always first iteration happens.
         }
-
-        //private bool checkIfValidMeasureInput(string i_MeasureStr)
-        //{
-        //    bool isInteger, isPositive;
-        //}
 
         private void printBoard()
         {
@@ -314,7 +311,6 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private void printBoardCardsRow(int i_Rows, int i_Cols, GameBoard i_board)
         {
-
             StringBuilder stringToPrint = new StringBuilder();
 
             for (int i = 0; i < i_Rows; i++)
@@ -344,7 +340,9 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private void printStatistics()
         {
-            //TO DO
+            StringBuilder stringToPrint = new StringBuilder();
+
+            //stringToPrint.Append();
         }
     }
 }

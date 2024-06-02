@@ -19,8 +19,9 @@ namespace Ex02_MemoryGameConsole.GameLogic
         {
             m_Player1 = new User(i_NamePlayer1);
             m_Player2 = new User(i_NamePlayer2);
-            m_CurrentTurn.CurrentPlayer = eCurrentPlayer.Player1; // change in turn;
             m_AgainstComputer = i_AgainstComputer;
+            m_Board = new GameBoard();
+            m_CurrentTurn = new Turn();
         }
 
         public GameBoard Board
@@ -67,16 +68,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
         public string GetPlayerNameOfCurrentTurn()
         {
-            string playerName;
-
-            if (CurrentTurn.CurrentPlayer == eCurrentPlayer.Player1)
-            {
-                playerName = m_Player1.Name;
-            }
-            else
-            {
-                playerName = m_Player2.Name;
-            }
+            string playerName = GetPlayerOfCurrentTurn().Name;
 
             return playerName;
         }
@@ -84,6 +76,46 @@ namespace Ex02_MemoryGameConsole.GameLogic
         public bool IsThereUnflippedCardsOnBoard()
         {
             return m_Board.IsThereUnflippedCards();
+        }
+
+        public bool IsCardsTheSame()
+        {
+            bool isAPair = m_CurrentTurn.Card1.Content == m_CurrentTurn.Card2.Content;
+            
+            return isAPair;
+        }
+
+        public void OperatesByChosenCards()
+        {
+            if (IsCardsTheSame())
+            {
+                User currentUser = GetPlayerOfCurrentTurn();
+                currentUser.AddPointToPlayer();
+            }
+            else
+            {
+                m_CurrentTurn.UnflippedCards();
+                m_CurrentTurn.SwitchPlayerTurn();
+            }
+
+            m_CurrentTurn.ResetCard1();
+            m_CurrentTurn.ResetCard2();
+        }
+
+        private User GetPlayerOfCurrentTurn()
+        {
+            User player;
+
+            if (CurrentTurn.CurrentPlayer == eCurrentPlayer.Player1)
+            {
+                player = m_Player1;
+            }
+            else
+            {
+                player = m_Player2;
+            }
+
+            return player;
         }
     }
 }

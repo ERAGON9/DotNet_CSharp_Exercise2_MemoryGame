@@ -85,8 +85,8 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
         private void fillCardsMatrix()
         {
-            int rows = m_Width;
-            int cols = m_Height;
+            int rows = m_Height;
+            int cols = m_Width;
             int totalCells = rows * cols;
             char currentCharacter = 'A';
             char[] characters = new char[totalCells];
@@ -160,12 +160,13 @@ namespace Ex02_MemoryGameConsole.GameLogic
             isValidCol = col >=1 && col <= m_Width;
             if (!isValidRow)
             {
-                io_ErrorMessage = "Wrong row number. Row must be between 1 and " + m_Width;
+                io_ErrorMessage = "Wrong row number. Row must be between 1 and " + m_Height;
 
             }
             else if (!isValidCol)
             {
-                io_ErrorMessage = "Wrong column number. Column must be between 1 and " + m_Height;
+                char endColChar = (char)('A' + m_Width - 1);
+                io_ErrorMessage = "Wrong column number. Column must be between A and " + endColChar;
             }
             else
             {
@@ -193,7 +194,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
         {
             char colChar = i_Square[0];
             char rowChar = i_Square[1];
-            o_Col = colChar - 'A';
+            o_Col = (colChar - 'A') + 1;
             o_Row = rowChar - '0';
         }
 

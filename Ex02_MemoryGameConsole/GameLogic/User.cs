@@ -9,6 +9,14 @@ namespace Ex02_MemoryGameConsole.GameLogic
     internal class User
     {
         private readonly string m_Name;
+        private int m_Points;
+
+        public User(string i_UserName)
+        {
+            m_Name = i_UserName;
+            m_Points = 0;
+        }
+
         public string Name 
         {
             get
@@ -17,9 +25,17 @@ namespace Ex02_MemoryGameConsole.GameLogic
             } 
         }
 
-        public User(string i_UserName)
+        public int Points
         {
-            m_Name = i_UserName;
+            get
+            {
+                return m_Points;
+            }
+        }
+
+        public void AddPointToPlayer()
+        {
+            m_Points++;
         }
     }
 }
