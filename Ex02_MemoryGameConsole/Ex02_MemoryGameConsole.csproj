@@ -39,6 +39,7 @@
     <Compile Include="GameLogic\Card.cs" />
     <Compile Include="GameLogic\eCurrentPlayer.cs" />
     <Compile Include="GameLogic\GameData.cs" />
+    <Compile Include="GameLogic\Turn.cs" />
     <Compile Include="GameLogic\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="UserInterface\UI.cs" />

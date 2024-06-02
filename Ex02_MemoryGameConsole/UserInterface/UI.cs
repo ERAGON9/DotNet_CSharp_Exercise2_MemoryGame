@@ -24,19 +24,18 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 {
                     Screen.Clear();
 
-                    printBoard();
+                    printBoard(); // update if flip card or not.
 
                     /*choose square*/
                     // get 1 square   (if press Q - break)
-                    // UI - check valid input
-                    // logic - check  if!(in board and not taken)
-                    //             UI - print error message
+                    pickCard();
 
                     Screen.Clear();
-                    //print board
-
+                    printBoard();
+                    
                     /*choose square again*/   //(if press Q)
                                               //need to return the square content
+                    pickCard();
 
                     //logic - check if the 2 cards the same
                     //if the same:
@@ -57,6 +56,27 @@ namespace Ex02_MemoryGameConsole.UserInterface
             }
         }
 
+        private void pickCard()
+        {
+            bool isValidSquare = false;
+            string square;
+            while (!isValidSquare) //logically
+            {
+                square = getSquare(); //UI (check in while)
+                if (square == "Q")
+                    break;
+                // logic - check  if!(in board and not taken)
+                isValidSquare = m_GameEngine.IsValidSquare(); // Logic
+                if (!isValidSquare)
+                {
+                    // UI - print error message
+                }
+
+            }
+            m_GameEngine.FlipCard(square);
+            m_GameEngine.Turn.flipCard1();
+            m_GameEngine.Turn.flipCard2();
+        }
         private void SetGameProperties()
         {
             string player1Name, player2Name;

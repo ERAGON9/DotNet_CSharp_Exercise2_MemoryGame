@@ -11,9 +11,9 @@ namespace Ex02_MemoryGameConsole.GameLogic
     {
         private User m_Player1;
         private User m_Player2;
-        private eCurrentPlayer m_CurrentPlayer;
         private readonly bool m_AgainstComputer;
         private Card[,] m_CardsMatrix;
+        private Turn m_CurrentTurn;
 
         private const int k_MinRowsColsSize = 4;
         private const int k_MaxRowsColsSize = 6;
@@ -30,7 +30,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
         {
             m_Player1 = new User(i_NamePlayer1);
             m_Player2 = new User(i_NamePlayer2);
-            m_CurrentPlayer = eCurrentPlayer.Player1;
+            m_CurrentTurn. = eCurrentPlayer.Player1; // change in turn;
             m_AgainstComputer = i_AgainstComputer;
         }
 
