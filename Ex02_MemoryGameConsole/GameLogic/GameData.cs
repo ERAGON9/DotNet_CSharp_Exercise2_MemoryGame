@@ -42,6 +42,12 @@ namespace Ex02_MemoryGameConsole.GameLogic
         {
             CurrentTurn.FlipCard2();
         }
+
+        public void UnflippeCardsInCurrentTurn()
+        {
+            CurrentTurn.UnflippedCards();
+        }
+
         public GameData(string i_NamePlayer1, string i_NamePlayer2, bool i_AgainstComputer)
         {
             m_Player1 = new User(i_NamePlayer1);
@@ -125,8 +131,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
             return isThereUnflippedCards;
         }
-
-
 
         public void PrintMatrix(Card[,] i_CardsMatrix)
         {
