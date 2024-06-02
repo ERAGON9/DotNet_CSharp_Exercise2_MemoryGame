@@ -10,7 +10,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
     {
         private bool m_IsFlipped;
 
-        private char? m_Content; //think later about the char or type thing.
+        private char m_Content; //think later about the char or type thing.
 
         public bool IsFlipped
         {
@@ -24,7 +24,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
         }
 
-        public char? Content
+        public char Content
         {
             get 
             {

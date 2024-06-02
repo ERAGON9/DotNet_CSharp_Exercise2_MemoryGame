@@ -85,7 +85,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
                     break;
                 }
 
-                isValidSquare = m_GameEngine.IsValidSquare(square, out errorMessage);
+                isValidSquare = m_GameEngine.IsValidSquareInput(square, out errorMessage);
                 if (!isValidSquare)
                 {
                     Console.WriteLine(errorMessage);
