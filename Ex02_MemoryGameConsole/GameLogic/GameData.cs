@@ -33,15 +33,20 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
         }
 
-        public void FlipCard()
+        public void FlipCard1InCurrentTurn()
         {
-            CurrentTurn.flipCard()
+            CurrentTurn.FlipCard1();
+        }
+
+        public void FlipCard2InCurrentTurn()
+        {
+            CurrentTurn.FlipCard2();
         }
         public GameData(string i_NamePlayer1, string i_NamePlayer2, bool i_AgainstComputer)
         {
             m_Player1 = new User(i_NamePlayer1);
             m_Player2 = new User(i_NamePlayer2);
-            m_CurrentTurn. = eCurrentPlayer.Player1; // change in turn;
+            m_CurrentTurn.CurrentPlayer = eCurrentPlayer.Player1; // change in turn;
             m_AgainstComputer = i_AgainstComputer;
         }
 

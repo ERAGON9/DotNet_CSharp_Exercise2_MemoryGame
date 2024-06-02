@@ -6,16 +6,31 @@ using System.Threading.Tasks;
 
 namespace Ex02_MemoryGameConsole.GameLogic
 {
+
     internal class Turn
     {
+
         private Card m_Card1;
         private Card m_Card2;
         private eCurrentCard m_CurrentCard;
         private eCurrentPlayer m_CurrentPlayer;
 
-        public void FlipCard()
+        public enum eCurrentCard
         {
+            Card1,
+            Card2
+        }
 
+        public eCurrentPlayer CurrentPlayer
+        {
+            get
+            {
+                return m_CurrentPlayer;
+            }
+            //set
+            //{
+            //    m_CurrentPlayer = value;
+            //}
         }
 
 
@@ -30,5 +45,11 @@ namespace Ex02_MemoryGameConsole.GameLogic
             m_Card2.FlipCard();
         }
 
+
+        public void UnflippedCards()
+        {
+            m_Card1.UnFlipCard();
+            m_Card2.UnFlipCard();
+        }
     }
 }
