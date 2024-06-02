@@ -10,13 +10,18 @@ namespace Ex02_MemoryGameConsole.GameLogic
     {
         private Card m_Card1;
         private Card m_Card2;
+        private eCurrentCard m_CurrentCard;
         private eCurrentPlayer m_CurrentPlayer;
 
-        private flipCard1()
+        public void FlipCard1()
         {
-            m_Card1.flip();
+            m_Card1.FlipCard();
         }
-        //same with card 2
+
+        public void flipCard2()
+        {
+            m_Card2.FlipCard();
+        }
 
     }
 }

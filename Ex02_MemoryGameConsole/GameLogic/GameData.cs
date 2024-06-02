@@ -25,6 +25,13 @@ namespace Ex02_MemoryGameConsole.GameLogic
                 return m_CardsMatrix;
             }
         } 
+        public Turn CurrentTurn
+        {
+            get
+            {
+                return m_CurrentTurn;
+            }
+        }
 
         public GameData(string i_NamePlayer1, string i_NamePlayer2, bool i_AgainstComputer)
         {
@@ -138,5 +145,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
                 throw new Exception("Matrix must have an even number of cells.");
             }
         }
+
+
     }
 }

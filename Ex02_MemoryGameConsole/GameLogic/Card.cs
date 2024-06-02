@@ -41,5 +41,15 @@ namespace Ex02_MemoryGameConsole.GameLogic
             m_IsFlipped = false;
             m_Content = i_Data;
         }
+
+        public void FlipCard()
+        {
+            m_IsFlipped = true;
+        }
+
+        public void UnFlipCard()
+        {
+            m_IsFlipped = false;
+        }
     }
 }
