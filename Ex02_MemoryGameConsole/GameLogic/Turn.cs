@@ -9,17 +9,10 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
     internal class Turn
     {
-
         private Card m_Card1;
         private Card m_Card2;
         private eCurrentCard m_CurrentCard;
         private eCurrentPlayer m_CurrentPlayer;
-
-        public enum eCurrentCard
-        {
-            Card1,
-            Card2
-        }
 
         public eCurrentPlayer CurrentPlayer
         {
@@ -27,10 +20,10 @@ namespace Ex02_MemoryGameConsole.GameLogic
             {
                 return m_CurrentPlayer;
             }
-            //set
-            //{
-            //    m_CurrentPlayer = value;
-            //}
+            set
+            {
+                m_CurrentPlayer = value;
+            }
         }
 
 

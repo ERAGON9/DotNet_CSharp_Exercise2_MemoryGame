@@ -155,6 +155,39 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
         }
 
+        public bool IsValidSquare(string i_Square, out string o_Message)
+        { 
+            bool isValid, isOnBoard, isUnflippedCard;
+            
+            checkIfSquareOnBoard(i_Square);
 
+            //checkIfUnflippedCard
+
+
+            if (isValid)
+                o_Message = String.Empty; //user not gonna use the message
+
+            return isValid;
+        }
+
+        private bool checkIfSquareOnBoard(string i_Square)
+        {
+            char rowChar, colChar;
+            int row, col, numberOfRows, numberOfCols; 
+            bool isValidSquare, isValidRow, isValidCol;
+
+            numberOfRows = m_CardsMatrix.GetLength(0);
+            numberOfCols = m_CardsMatrix.GetLength(0);
+            rowChar = i_Square[1];
+            colChar = i_Square[2];
+            row = rowChar - '0';
+            //col =;
+
+
+            isValidRow = rowNumber < numberOfRows ;
+
+
+            int cols = io_CardsMatrix.GetLength(1);
+        }
     }
 }
