@@ -10,34 +10,52 @@ namespace Ex02_MemoryGameConsole.GameLogic
     {
         private Card[,] m_CardsMatrix;
         private int m_MatrixWidth;
-        private int m_MatrixHeight; //not readonly because it can change if he choose to play again
+        private int m_MatrixHeight; //not readonly, it can change if choose to play again.
         private int m_NumberOfUnflippedPairs;
 
         private const int k_MinRowsColsSize = 4;
         private const int k_MaxRowsColsSize = 6;
 
-        public void InitialGameBoard(int i_Rows, int i_Cols)
+        public bool TryInitialGameBoard(int i_Rows, int i_Cols, out string o_ErrorMesage)
         {
-            validateMatrixSize(i_Rows, i_Cols);
-            m_MatrixWidth = i_Cols;
-            m_MatrixHeight = i_Rows;
-            m_CardsMatrix = new Card[i_Rows, i_Cols];
-            fillCardsMatrix();
+            bool isValid = IsBoardSizeValid(i_Rows, i_Cols, out o_ErrorMesage);
+            
+            if (isValid)
+            {
+                m_MatrixWidth = i_Cols;
+                m_MatrixHeight = i_Rows;
+                m_CardsMatrix = new Card[i_Rows, i_Cols];
+                fillCardsMatrix();
+            }
+
+            return isValid;
         }
-        private void validateMatrixSize(int i_Rows, int i_Cols)
+
+        private bool IsBoardSizeValid(int i_Rows, int i_Cols, out string o_ErrorMesage)
         {
+            bool isValid = true;
+
             if (i_Rows < k_MinRowsColsSize || i_Rows > k_MaxRowsColsSize)
             {
-                throw new Exception("Exception: Rows not at range 4-6 include.");
+                isValid = false;
+                o_ErrorMesage = "Rows not at range 4-6 (include).";
             }
             else if (i_Cols < k_MinRowsColsSize || i_Cols > k_MaxRowsColsSize)
             {
-                throw new Exception("Exception: Cols not at range 4-6 include.");
+                isValid = false;
+                o_ErrorMesage = "Cols not at range 4-6 (include).");
             }
             else if (i_Rows * i_Cols % 2 != 0)
             {
-                throw new Exception("Exception: Matrix must have an even numberof cells");
+                isValid = false;
+                o_ErrorMesage = "Board must have an even number of cells.";
             }
+            else
+            {
+                o_ErrorMesage = "All valid.";
+            }
+
+            return isValid;
         }
 
         private void fillCardsMatrix()
@@ -84,6 +102,16 @@ namespace Ex02_MemoryGameConsole.GameLogic
             return isThereUnflippedCards;
         }
 
+        public Card GetCard(string i_Square)
+        {
+            colChar = i_Square[0];
+            rowChar = i_Square[1];
+            col = colChar - 'A';
+            row = rowChar - '1';
+
+
+        }
+
         public bool IsValidSquare(string i_Square, out string o_Message)
         {
             bool isValid, isOnBoard, isUnflippedCard;
@@ -98,22 +126,24 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
             return isValid;
         }
-        private bool checkIfSquareOnBoard(string i_Square /*add out error message*/)
+
+        private bool checkIfSquareOnBoard(string i_Square, out string o_ErrorMessage)
         {
             char rowChar, colChar;
             int row, col, numberOfRows, numberOfCols;
             bool isValidSquare, isValidRow, isValidCol;
-   
+            
+            colChar = i_Square[0];
             rowChar = i_Square[1];
-            colChar = i_Square[2];
-            row = rowChar - '0';
             col = colChar - 'A';
+            row = rowChar - '1';
             isValidRow = row >= 1 && row <= m_MatrixHeight;
 
             isValidCol = col >=1 && col <= m_MatrixWidth;
 
 
             //isValidRow = row < numberOfRows;
+            o_ErrorMessage = " ";
         }
 
 

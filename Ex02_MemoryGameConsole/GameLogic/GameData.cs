@@ -40,7 +40,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
         public void FlipCard1InCurrentTurn(string i_Square)
         {
-
             CurrentTurn.Card1 = Board.GetCard(i_Square);
             CurrentTurn.FlipCard1();
         }
@@ -55,9 +54,9 @@ namespace Ex02_MemoryGameConsole.GameLogic
             CurrentTurn.UnflippedCards();
         }
 
-        public void InitialBoard(int i_Rows, int i_Cols)
+        public bool TryInitialBoard(int i_Rows, int i_Cols, out string o_ErrorMessage)
         {
-            Board.InitialCardsMatrix(i_Rows, i_Cols);
+            return Board.TryInitialGameBoard(i_Rows, i_Cols, out o_ErrorMessage);
         }
 
         public bool IsValidSquareInput(string i_Square, out string o_Message)
@@ -65,5 +64,20 @@ namespace Ex02_MemoryGameConsole.GameLogic
             return Board.IsValidSquare( i_Square, out o_Message);
         }
 
+        public string GetPlayerNameOfCurrentTurn()
+        {
+            string playerName;
+
+            if (CurrentTurn.CurrentPlayer == eCurrentPlayer.Player1)
+            {
+                playerName = m_Player1.Name;
+            }
+            else
+            {
+                playerName = m_Player2.Name;
+            }
+
+            return playerName;
+        }
     }
 }

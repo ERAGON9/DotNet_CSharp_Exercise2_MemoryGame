@@ -12,40 +12,42 @@ namespace Ex02_MemoryGameConsole.UserInterface
     {
         private GameData m_GameEngine;
         private bool m_StillPlaying = true;
-        //private bool m_PlayerQuit = false;
 
         public void runGame()
         {
-
-
             setGameProperties();
             setBoardGame();
 
             while (m_StillPlaying)
             {
                 Screen.Clear();
-
                 printBoard();
 
+               
+                Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn:");
                 /*choose square*/
-                // get 1 square   (if press Q - break)
-                pickSquare();
-                if (!m_StillPlaying)
+                string chosenSquare1 = getValidSquareFromPlayer();
+                if (chosenSquare1 == "Q")
                 {
                     break;
                 }
+                m_GameEngine.FlipCard1InCurrentTurn(chosenSquare1);
 
                 Screen.Clear();
                 printBoard();
 
-                /*choose square again*/   //(if press Q)
-                                          //need to return the square content
-                pickSquare();
-                if (!m_StillPlaying)
+                /*choose square again*/
+                string chosenSquare2 = getValidSquareFromPlayer();
+                if (chosenSquare2 == "Q")
                 {
                     break;
                 }
+                m_GameEngine.FlipCard2InCurrentTurn(chosenSquare2);
 
+                Screen.Clear();
+                printBoard();
+
+                m_GameEngine.RunTurn();
                 //logic - check if the 2 cards the same
                 //if the same:
                 //   givePoint()    
@@ -60,42 +62,37 @@ namespace Ex02_MemoryGameConsole.UserInterface
             if (isGameOver()) 
             {
                 printStatistics();
+                // print the ponits of each player- with player win.
+                // if want another game or not.
             }
             else
             {
                 Console.WriteLine("Player choose to Quit during the game.");
                 Console.WriteLine("Game closing, bye bye.");
             }
-
-
-            // print the ponits of each player- with player win.
-            // if want another game or not.
         }
 
-        private void pickSquare()
+        private string getValidSquareFromPlayer()
         {
             bool isValidSquare = false;
-            string square, errorMessage;
+            string square = string.Empty , errorMessage;
 
-            while (!isValidSquare) //logically
+            while (!isValidSquare)
             {
                 square = getSquare();
-                if (!m_StillPlaying)
+                if (square == "Q")
                 {
-                    return;
+                    break;
                 }
 
-                // logic - check  if not in board and not taken.
-                isValidSquare = m_GameEngine.IsValidSquare(square, out errorMessage); // Logic
+                isValidSquare = m_GameEngine.IsValidSquare(square, out errorMessage);
                 if (!isValidSquare)
                 {
                     Console.WriteLine(errorMessage);
                 }
             }
 
-            m_GameEngine.FlipCard(square);
-            m_GameEngine.flipCard1();
-            m_GameEngine.flipCard2();
+            return square;
         }
 
         private string getSquare()
@@ -115,7 +112,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
                     break;
                 }
 
-                isValidSquare = squareValidation(playerInput);
+                isValidSquare = squareUIValidation(playerInput);
             }
 
             return playerInput;
@@ -128,7 +125,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
             return isUserQuit;
         }
 
-        private bool squareValidation(string i_Square)
+        private bool squareUIValidation(string i_Square)
         {
             bool isValid = true;
 
@@ -141,6 +138,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
             return isValid;
         }
+
         private void setGameProperties()
         {
             string player1Name, player2Name;
@@ -163,7 +161,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 boardWidth = receiveBoardWidth();
                 boardHeight = receiveBoardHeight();
 
-                initialSucceeded = m_GameEngine.InitialCardsMatrix(boardHeight, boardWidth, out errorMessage);
+                initialSucceeded = m_GameEngine.TryInitialBoard(boardHeight, boardWidth, out errorMessage);
                 if (!initialSucceeded)
                 {
                     Console.WriteLine(errorMessage + " try again.");
@@ -274,8 +272,8 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private void printBoard()
         {
-            int rows = m_GameEngine.CardsMatrix.GetLength(0);
-            int cols = m_GameEngine.CardsMatrix.GetLength(1);
+            int rows = m_GameEngine.Board.GetLength(0);
+            int cols = m_GameEngine.Board.GetLength(1);
 
             printBoardFirstRow(cols);
             printBoardEqualsRow(cols);
@@ -342,6 +340,9 @@ namespace Ex02_MemoryGameConsole.UserInterface
             }
         }
 
-
+        private void printStatistics()
+        {
+            
+        }
     }
 }
