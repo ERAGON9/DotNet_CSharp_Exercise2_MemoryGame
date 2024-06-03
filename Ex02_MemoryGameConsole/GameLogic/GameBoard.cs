@@ -143,7 +143,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
         public bool IsValidSquare(string i_Square, out string o_ErrorMessage)
         {
             bool isValid, isOnBoard;
-            o_ErrorMessage = String.Empty; //If there is no error, the user not gonna use the error message so it can be empty
+            o_ErrorMessage = String.Empty; //If there is no error, the Player not gonna use the error message so it can be empty
 
             isOnBoard = checkIfSquareOnBoard(i_Square, ref o_ErrorMessage);
             isValid = isOnBoard && checkIfUnflippedCard(i_Square, ref o_ErrorMessage);

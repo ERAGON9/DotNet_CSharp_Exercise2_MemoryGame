@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex02_MemoryGameConsole.UserInterface
+namespace Ex02_MemoryGameConsole.PlayerInterface
 {
     internal class UI
     {
@@ -25,7 +25,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
                                   " first square:");
                 string chosenSquare1 = getValidSquareFromPlayer();
-                if (chosenSquare1 == "Q")
+                if (checkIfPlayerQuit(chosenSquare1))
                 {
                     break;
                 }
@@ -36,7 +36,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
                                   " secound square:");
                 string chosenSquare2 = getValidSquareFromPlayer();
-                if (chosenSquare2 == "Q")
+                if (checkIfPlayerQuit(chosenSquare2))
                 {
                     break;
                 }
@@ -67,6 +67,11 @@ namespace Ex02_MemoryGameConsole.UserInterface
             }
         }
 
+        private bool checkIfPlayerQuit(string i_PlayerInput)
+        {
+            return i_PlayerInput == "Q";
+        }
+
         private string getValidSquareFromPlayer()
         {
             bool isValidSquare = false;
@@ -75,7 +80,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
             while (!isValidSquare)
             {
                 square = getSquare();
-                if (square == "Q")
+                if (checkIfPlayerQuit(square))
                 {
                     break;
                 }
@@ -101,7 +106,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 Console.WriteLine("Please enter square to uncover " +
                     "letter for column and number for row (like: B2) or Q for Quit");
                 playerInput = Console.ReadLine();
-                if (isUserQuit(playerInput))
+                if (isPlayerQuit(playerInput))
                 {
                     m_StillPlaying = false;
                     break;
@@ -113,11 +118,11 @@ namespace Ex02_MemoryGameConsole.UserInterface
             return playerInput;
         }
 
-        private bool isUserQuit(string i_UserInput)
+        private bool isPlayerQuit(string i_PlayerInput)
         {
-            bool isUserQuit = i_UserInput == "Q";
+            bool isPlayerQuit = i_PlayerInput == "Q";
             
-            return isUserQuit;
+            return isPlayerQuit;
         }
 
         private bool squareUIValidation(string i_Square)
@@ -341,6 +346,9 @@ namespace Ex02_MemoryGameConsole.UserInterface
         private void printStatistics()
         {
             StringBuilder stringToPrint = new StringBuilder();
+            Player player1 = m_GameEngine.
+               // , player2;
+
 
             //stringToPrint.Append();
         }

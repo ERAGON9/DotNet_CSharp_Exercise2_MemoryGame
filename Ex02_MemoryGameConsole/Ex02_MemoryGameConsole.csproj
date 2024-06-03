@@ -42,7 +42,7 @@
     <Compile Include="GameLogic\GameBoard.cs" />
     <Compile Include="GameLogic\GameData.cs" />
     <Compile Include="GameLogic\Turn.cs" />
-    <Compile Include="GameLogic\User.cs" />
+    <Compile Include="GameLogic\Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="UserInterface\UI.cs" />
   </ItemGroup>

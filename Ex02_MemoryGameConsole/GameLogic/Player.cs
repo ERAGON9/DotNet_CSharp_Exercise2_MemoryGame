@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Ex02_MemoryGameConsole.GameLogic
 {
-    internal class User
+    internal class Player
     {
         private readonly string m_Name;
         private int m_Points;
 
-        public User(string i_UserName)
+        public Player(string i_PlayerName)
         {
-            m_Name = i_UserName;
+            m_Name = i_PlayerName;
             m_Points = 0;
         }
 

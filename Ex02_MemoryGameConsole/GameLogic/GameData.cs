@@ -9,16 +9,16 @@ namespace Ex02_MemoryGameConsole.GameLogic
 {
     internal class GameData
     {
-        private User m_Player1;
-        private User m_Player2;
+        private Player m_Player1;
+        private Player m_Player2;
         private readonly bool m_AgainstComputer;
         private GameBoard m_Board;
         private Turn m_CurrentTurn;
 
         public GameData(string i_NamePlayer1, string i_NamePlayer2, bool i_AgainstComputer)
         {
-            m_Player1 = new User(i_NamePlayer1);
-            m_Player2 = new User(i_NamePlayer2);
+            m_Player1 = new Player(i_NamePlayer1);
+            m_Player2 = new Player(i_NamePlayer2);
             m_AgainstComputer = i_AgainstComputer;
             m_Board = new GameBoard();
             m_CurrentTurn = new Turn();
@@ -36,6 +36,20 @@ namespace Ex02_MemoryGameConsole.GameLogic
             get
             {
                 return m_CurrentTurn;
+            }
+        } 
+        public Player Player1
+        {
+            get
+            {
+                return m_Player1;
+            }
+        } 
+        public Player Player2
+        {
+            get
+            {
+                return m_Player2;
             }
         }
 
@@ -89,8 +103,8 @@ namespace Ex02_MemoryGameConsole.GameLogic
         {
             if (IsCardsTheSame())
             {
-                User currentUser = GetPlayerOfCurrentTurn();
-                currentUser.AddPointToPlayer();
+                Player currentPlayer = GetPlayerOfCurrentTurn();
+                currentPlayer.AddPointToPlayer();
             }
             else
             {
@@ -102,10 +116,10 @@ namespace Ex02_MemoryGameConsole.GameLogic
             m_CurrentTurn.ResetCard2();
         }
 
-        private User GetPlayerOfCurrentTurn()
+        private Player GetPlayerOfCurrentTurn()
         {
-            User player;
-
+            Player player;
+            
             if (CurrentTurn.CurrentPlayer == eCurrentPlayer.Player1)
             {
                 player = m_Player1;
