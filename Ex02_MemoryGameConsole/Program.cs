@@ -14,7 +14,7 @@ namespace Ex02_MemoryGameConsole
         {
             UI userInterface = new UI();
 
-            userInterface.runGame();
+            userInterface.RunProgram();
 
             //GameData gameData = new GameData("Lior", "Noa", false);
 

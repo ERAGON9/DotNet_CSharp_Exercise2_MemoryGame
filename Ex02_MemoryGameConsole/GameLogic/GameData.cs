@@ -31,6 +31,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
                 return m_Board;
             }
         } 
+
         public Turn CurrentTurn
         {
             get
@@ -38,20 +39,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
                 return m_CurrentTurn;
             }
         } 
-        public Player Player1
-        {
-            get
-            {
-                return m_Player1;
-            }
-        } 
-        public Player Player2
-        {
-            get
-            {
-                return m_Player2;
-            }
-        }
 
         public void FlipCard1InCurrentTurn(string i_Square)
         {
@@ -130,6 +117,12 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
 
             return player;
+        }
+
+        public void GetPlayersScore(out int o_ScorePlayer1, out int o_ScorePlayer2)
+        {
+            o_ScorePlayer1 = m_Player1.Points;
+            o_ScorePlayer2 = m_Player2.Points;
         }
     }
 }

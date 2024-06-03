@@ -6,27 +6,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex02_MemoryGameConsole.PlayerInterface
+namespace Ex02_MemoryGameConsole.UserInterface
 {
     internal class UI
     {
         private GameData m_GameEngine;
-        private bool m_StillPlaying = true;
+        //private bool m_StillPlaying = true;
+        private bool m_ProgramStillRunning = true;
 
-        public void runGame()
+        public void RunProgram()
         {
+            printWelcomeMessage();
+            while (m_ProgramStillRunning)
+            {
+                newGame();
+            }
+            printGoodbyeMessage();
+        }
+
+        private void newGame()
+        {
+            printNewGameMessage();
             setGameProperties();
             setBoardGame();
+            runGame();
+        }
 
-            while (m_StillPlaying)
+        private void runGame()
+        {
+            bool gameOver = false;
+
+            while (!gameOver)
             {
                 Screen.Clear();
                 printBoard();
                 Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
                                   " first square:");
                 string chosenSquare1 = getValidSquareFromPlayer();
-                if (checkIfPlayerQuit(chosenSquare1))
+                if (isPlayerQuit(chosenSquare1))
                 {
+                    quitGame();
                     break;
                 }
 
@@ -36,8 +55,9 @@ namespace Ex02_MemoryGameConsole.PlayerInterface
                 Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
                                   " secound square:");
                 string chosenSquare2 = getValidSquareFromPlayer();
-                if (checkIfPlayerQuit(chosenSquare2))
+                if (isPlayerQuit(chosenSquare2))
                 {
+                    quitGame();
                     break;
                 }
 
@@ -51,25 +71,55 @@ namespace Ex02_MemoryGameConsole.PlayerInterface
                     System.Threading.Thread.Sleep(2000);
                 }
 
-                m_StillPlaying = !isGameOver();
+                gameOver = isGameOver();
             }
 
-            if (isGameOver()) 
+            if (gameOver) 
             {
                 printStatistics();
-                // print the ponits of each player- with player win.
-                // if want another game or not.
-            }
-            else
-            {
-                Console.WriteLine("Player choose to Quit during the game.");
-                Console.WriteLine("Game closing, bye bye.");
+                if (!wantsToPlayAgain())
+                {
+                    quitGame();
+                }
             }
         }
 
-        private bool checkIfPlayerQuit(string i_PlayerInput)
+        private bool wantsToPlayAgain()
         {
-            return i_PlayerInput == "Q";
+            string input;
+            bool playAgain;
+
+            Console.WriteLine("Play again?");
+            Console.WriteLine("Press 1 if you want to play again.\nPress 0 to exit");
+            input = Console.ReadLine();
+            playAgain = input == "1"; //maybe change it to enum or somethig
+
+            return playAgain;
+        }
+
+        private void quitGame()
+        {
+            printQuitMessage();
+            m_ProgramStillRunning = false;
+        }
+
+        private void printGoodbyeMessage()
+        {
+            Console.WriteLine("Game closing, bye bye.");
+        }
+        
+        private void printWelcomeMessage()
+        {
+            Console.WriteLine("HELLO! Welcome to the memory game");
+        }  
+        private void printNewGameMessage()
+        {
+            Console.WriteLine("Starting a new game");
+        }   
+
+        private void printQuitMessage()
+        {
+            Console.WriteLine("You choose to QUIT during the game.");
         }
 
         private string getValidSquareFromPlayer()
@@ -80,7 +130,7 @@ namespace Ex02_MemoryGameConsole.PlayerInterface
             while (!isValidSquare)
             {
                 square = getSquare();
-                if (checkIfPlayerQuit(square))
+                if (isPlayerQuit(square))
                 {
                     break;
                 }
@@ -108,7 +158,6 @@ namespace Ex02_MemoryGameConsole.PlayerInterface
                 playerInput = Console.ReadLine();
                 if (isPlayerQuit(playerInput))
                 {
-                    m_StillPlaying = false;
                     break;
                 }
 
@@ -120,7 +169,8 @@ namespace Ex02_MemoryGameConsole.PlayerInterface
 
         private bool isPlayerQuit(string i_PlayerInput)
         {
-            bool isPlayerQuit = i_PlayerInput == "Q";
+            const string quitString = "Q";
+            bool isPlayerQuit = i_PlayerInput == quitString;
             
             return isPlayerQuit;
         }
@@ -314,7 +364,7 @@ namespace Ex02_MemoryGameConsole.PlayerInterface
             Console.WriteLine(stringToPrint);
         }
 
-        private void printBoardCardsRow(int i_Rows, int i_Cols, GameBoard i_board)
+        private void printBoardCardsRow(int i_Rows, int i_Cols, GameBoard i_Board)
         {
             StringBuilder stringToPrint = new StringBuilder();
 
@@ -324,13 +374,13 @@ namespace Ex02_MemoryGameConsole.PlayerInterface
                 for (int j = 0; j < i_Cols; j++)
                 {
                     stringToPrint.Append("| ");
-                    if (i_board.CardsMatrix[i,j].IsFlipped == false)
+                    if (i_Board.CardsMatrix[i,j].IsFlipped == false)
                     {
                         stringToPrint.Append(' ');
                     }
                     else
                     {
-                        stringToPrint.Append(i_board.CardsMatrix[i, j].Content);
+                        stringToPrint.Append(i_Board.CardsMatrix[i, j].Content);
                     }
 
                     stringToPrint.Append(' ');
@@ -345,12 +395,10 @@ namespace Ex02_MemoryGameConsole.PlayerInterface
 
         private void printStatistics()
         {
-            StringBuilder stringToPrint = new StringBuilder();
-            Player player1 = m_GameEngine.
-               // , player2;
-
-
-            //stringToPrint.Append();
+            m_GameEngine.GetPlayersScore(out int scorePlayer1, out int scorePlayer2);
+            Console.WriteLine("--------GAME OVER--------");
+            Console.WriteLine("Player 1 score: " + scorePlayer1 + " points.");
+            Console.WriteLine("Player 2 score: " + scorePlayer2 + " points.");
         }
     }
 }
