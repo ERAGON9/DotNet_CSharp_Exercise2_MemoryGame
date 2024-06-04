@@ -19,7 +19,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
         {
             m_Player1 = new Player(i_NamePlayer1);
             m_Player2 = new Player(i_NamePlayer2);
-            m_AgainstComputer = i_AgainstComputer;
+            m_AgainstComputer = i_AgainstComputer; //צריך?
             m_Board = new GameBoard();
             m_CurrentTurn = new Turn();
         }
@@ -39,6 +39,11 @@ namespace Ex02_MemoryGameConsole.GameLogic
                 return m_CurrentTurn;
             }
         } 
+
+        public string GetCurrenPlayerType()
+        {
+            return CurrentTurn.CurrentPlayerType;
+        }
 
         public void FlipCard1InCurrentTurn(string i_Square)
         {
