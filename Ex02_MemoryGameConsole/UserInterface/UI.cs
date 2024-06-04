@@ -13,6 +13,10 @@ namespace Ex02_MemoryGameConsole.UserInterface
         private GameData m_GameEngine;
         //private bool m_StillPlaying = true;
         private bool m_ProgramStillRunning = true;
+        private const int k_MinRowsColsSize = 4;
+        private const int k_MaxRowsColsSize = 6;
+        //maybe change the name of the class to program UI
+        //and then the sizes make sense
 
         public void RunProgram()
         {
@@ -102,26 +106,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
             printQuitMessage();
             m_ProgramStillRunning = false;
         }
-
-        private void printGoodbyeMessage()
-        {
-            Console.WriteLine("Game closing, bye bye.");
-        }
-        
-        private void printWelcomeMessage()
-        {
-            Console.WriteLine("HELLO! Welcome to the memory game");
-        }  
-        private void printNewGameMessage()
-        {
-            Console.WriteLine("Starting a new game");
-        }   
-
-        private void printQuitMessage()
-        {
-            Console.WriteLine("You choose to QUIT during the game.");
-        }
-
+       
         private string getValidSquareFromPlayer()
         {
             bool isValidSquare = false;
@@ -204,12 +189,14 @@ namespace Ex02_MemoryGameConsole.UserInterface
         {
             int boardWidth, boardHeight;
             bool initialSucceeded = false;
+            bool BoardSizeisValid;
             string errorMessage;
 
             while (!initialSucceeded)
             {
                 boardWidth = receiveBoardWidth();
                 boardHeight = receiveBoardHeight();
+                //isValidBoardSize = checkIfValidBoardSize();
 
                 initialSucceeded = m_GameEngine.TryInitialBoard(boardHeight,
                                                 boardWidth, out errorMessage);
@@ -218,6 +205,27 @@ namespace Ex02_MemoryGameConsole.UserInterface
                     Console.WriteLine(errorMessage + " try again.");
                 }
             }
+        }
+
+        private bool checkIfBoardSizeIsValid(int i_Rows, int i_Cols, out string o_ErrorMesage)
+        {
+            bool isValid = false;
+
+            if (i_Rows < k_MinRowsColsSize || i_Rows > k_MaxRowsColsSize)
+            {
+                o_ErrorMesage = "Rows not at range 4-6 (include).";
+            }
+            else if (i_Cols < k_MinRowsColsSize || i_Cols > k_MaxRowsColsSize)
+            {
+                o_ErrorMesage = "Cols not at range 4-6 (include).";
+            }
+            else
+            {
+                o_ErrorMesage = String.Empty;
+                isValid = true;
+            }
+
+            return isValid;
         }
 
         private string receivePlayerName()
@@ -291,29 +299,35 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
             return boardHeight;
         }
-
         private int receiveMeasure()
         {
-            bool isValidInput = false, isPositive, isInteger;
+            bool isValidInput = false;
+            bool isPositive, isInteger;
             int? measure = null;
             string inputStr;
-
             while (!isValidInput)
             {
                 inputStr = Console.ReadLine();
                 isInteger = int.TryParse(inputStr, out int tmpMeasure);
                 if (!isInteger)
                 {
-                    Console.WriteLine("Input must be an integer. Try again\n");
+                    Console.WriteLine("Measure must be an integer. Try again\n");
                     continue;
                 }
 
                 isPositive = tmpMeasure > 0;
                 if (!isPositive)
                 {
-                    Console.WriteLine("Input must be an positive. Try again\n");
+                    Console.WriteLine("Measure must be positive. Try again\n");
                     continue;
                 }
+
+                //isInTheOptionalSizes = checkIfMeasureInTheOptionalSizes(tmpMeasure);
+                //if(!isInTheOptionalSizes)
+                //{
+                //    Console.WriteLine("Measure must be between 4 and 6. Try again\n");
+                //    continue;
+                //}
 
                 isValidInput = true;
                 measure = tmpMeasure;
@@ -321,7 +335,12 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
             return measure.Value; //Always get value because always first iteration happens.
         }
+        //private bool checkIfMeasureInTheOptionalSizes(int i_Measure)
+        //{
+        //    bool result = (i_Measure <= k_MaxHeightWidthSizeSize) && (i_Measure >= k_MinHeightWidthSize);
 
+        //    return result;
+        //}
         private void printBoard()
         {
             GameBoard board = m_GameEngine.Board;
@@ -400,5 +419,26 @@ namespace Ex02_MemoryGameConsole.UserInterface
             Console.WriteLine("Player 1 score: " + scorePlayer1 + " points.");
             Console.WriteLine("Player 2 score: " + scorePlayer2 + " points.");
         }
+
+        private void printGoodbyeMessage()
+        {
+            Console.WriteLine("Game closing, bye bye.");
+        }
+
+        private void printWelcomeMessage()
+        {
+            Console.WriteLine("HELLO! Welcome to the memory game");
+        }
+
+        private void printNewGameMessage()
+        {
+            Console.WriteLine("Starting a new game");
+        }
+
+        private void printQuitMessage()
+        {
+            Console.WriteLine("You choose to QUIT during the game.");
+        }
+
     }
 }

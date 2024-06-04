@@ -13,8 +13,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
         private int m_Width;
         private int m_Height; //not readonly, it can change if choose to play again.
         private int m_NumberOfUnflippedPairs;
-        private const int k_MinRowsColsSize = 4;
-        private const int k_MaxRowsColsSize = 6;
+
 
         //private const bool k_TrueInitialize = true;
         //private const bool k_FalseInitialize = false;
@@ -46,7 +45,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
         public bool TryInitialGameBoard(int i_Rows, int i_Cols, out string o_ErrorMesage)
         {
             bool isValid = isBoardSizeValid(i_Rows, i_Cols, out o_ErrorMesage);
-            
+            //isEvenSquaresAmount
             if (isValid)
             {
                 m_Width = i_Cols;
@@ -58,29 +57,21 @@ namespace Ex02_MemoryGameConsole.GameLogic
             return isValid;
         }
 
+        //maybe change name, now its just even checking
         private bool isBoardSizeValid(int i_Rows, int i_Cols, out string o_ErrorMesage)
         {
-            bool isValid = false;
+            bool countOfSquaresIsEven = i_Rows * i_Cols % 2 != 0;
 
-            if (i_Rows < k_MinRowsColsSize || i_Rows > k_MaxRowsColsSize)
-            {
-                o_ErrorMesage = "Rows not at range 4-6 (include).";
-            }
-            else if (i_Cols < k_MinRowsColsSize || i_Cols > k_MaxRowsColsSize)
-            {
-                o_ErrorMesage = "Cols not at range 4-6 (include).";
-            }
-            else if (i_Rows * i_Cols % 2 != 0)
+            if (!countOfSquaresIsEven)
             {
                 o_ErrorMesage = "Board must have an even number of cells.";
             }
             else
             {
-                isValid = true;
-                o_ErrorMesage = "All valid.";
+                o_ErrorMesage = String.Empty;
             }
 
-            return isValid;
+            return countOfSquaresIsEven;
         }
 
         private void fillCardsMatrix()
@@ -142,7 +133,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
         public bool IsValidSquare(string i_Square, out string o_ErrorMessage)
         {
-            bool isValid, isOnBoard;
+            bool isValid, isOnBoard, isPositive;
             o_ErrorMessage = String.Empty; //If there is no error, the Player not gonna use the error message so it can be empty
 
             isOnBoard = checkIfSquareOnBoard(i_Square, ref o_ErrorMessage);
@@ -202,6 +193,16 @@ namespace Ex02_MemoryGameConsole.GameLogic
     }
 }
 
+
+
+//if (i_Rows < k_MinRowsColsSize || i_Rows > k_MaxRowsColsSize)
+//{
+//    o_ErrorMesage = "Rows not at range 4-6 (include).";
+//}
+//else if (i_Cols < k_MinRowsColsSize || i_Cols > k_MaxRowsColsSize)
+//{
+//    o_ErrorMesage = "Cols not at range 4-6 (include).";
+//}
 //public void PrintMatrix(Card[,] i_CardsMatrix)
 //{
 //    int rows = i_CardsMatrix.GetLength(0);
