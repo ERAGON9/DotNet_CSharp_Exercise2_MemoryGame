@@ -10,7 +10,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
     {
         private bool m_IsFlipped;
 
-        private char m_Content; //think later about the char or type thing.
+        private uint m_Content;
 
         public bool IsFlipped
         {
@@ -24,7 +24,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
         }
 
-        public char Content
+        public uint Content
         {
             get 
             {
@@ -36,7 +36,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
         }
 
-        public Card(char i_Data) 
+        public Card(uint i_Data) 
         {
             m_IsFlipped = false;
             m_Content = i_Data;

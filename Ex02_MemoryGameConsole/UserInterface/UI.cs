@@ -11,24 +11,25 @@ namespace Ex02_MemoryGameConsole.UserInterface
     internal class UI
     {
         private GameData m_GameEngine;
-        //private bool m_StillPlaying = true;
+        private MessageUI m_Messages = new MessageUI();
+        private BoardUI m_Board = new BoardUI();
         private bool m_ProgramStillRunning = true;
 
         public void RunProgram()
         {
-            printWelcomeMessage();
+            m_Messages.PrintWelcomeMessage();
             while (m_ProgramStillRunning)
             {
                 newGame();
             }
-            printGoodbyeMessage();
+            m_Messages.PrintGoodbyeMessage();
         }
 
         private void newGame()
         {
-            printNewGameMessage();
+            m_Messages.PrintNewGameMessage();
             setGameProperties();
-            setBoardGame();
+            m_Board.SetBoardGame(m_GameEngine);
             runGame();
         }
 
@@ -39,7 +40,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
             while (!gameOver)
             {
                 Screen.Clear();
-                printBoard();
+                m_Board.PrintBoard(m_GameEngine.Board);
                 Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
                                   " first square:");
                 string chosenSquare1 = getValidSquareFromPlayer();
@@ -51,7 +52,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
                 m_GameEngine.FlipCard1InCurrentTurn(chosenSquare1);
                 Screen.Clear();
-                printBoard();
+                m_Board.PrintBoard(m_GameEngine.Board);
                 Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
                                   " secound square:");
                 string chosenSquare2 = getValidSquareFromPlayer();
@@ -63,7 +64,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
                 m_GameEngine.FlipCard2InCurrentTurn(chosenSquare2);
                 Screen.Clear();
-                printBoard();
+                m_Board.PrintBoard(m_GameEngine.Board);
                 bool isAPair = m_GameEngine.IsCardsTheSame();
                 m_GameEngine.OperatesByChosenCards();
                 if (!isAPair)
@@ -90,7 +91,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
             bool playAgain;
 
             Console.WriteLine("Play again?");
-            Console.WriteLine("Press 1 if you want to play again.\nPress 0 to exit");
+            Console.WriteLine("Press 1 if you want to play again or 0 to exit");
             input = Console.ReadLine();
             playAgain = input == "1"; //maybe change it to enum or somethig
 
@@ -99,27 +100,8 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private void quitGame()
         {
-            printQuitMessage();
+            m_Messages.PrintQuitMessage();
             m_ProgramStillRunning = false;
-        }
-
-        private void printGoodbyeMessage()
-        {
-            Console.WriteLine("Game closing, bye bye.");
-        }
-        
-        private void printWelcomeMessage()
-        {
-            Console.WriteLine("HELLO! Welcome to the memory game");
-        }  
-        private void printNewGameMessage()
-        {
-            Console.WriteLine("Starting a new game");
-        }   
-
-        private void printQuitMessage()
-        {
-            Console.WriteLine("You choose to QUIT during the game.");
         }
 
         private string getValidSquareFromPlayer()
@@ -200,26 +182,6 @@ namespace Ex02_MemoryGameConsole.UserInterface
             m_GameEngine = new GameData(player1Name, player2Name, gameAgainstComputer);
         }
 
-        private void setBoardGame()
-        {
-            int boardWidth, boardHeight;
-            bool initialSucceeded = false;
-            string errorMessage;
-
-            while (!initialSucceeded)
-            {
-                boardWidth = receiveBoardWidth();
-                boardHeight = receiveBoardHeight();
-
-                initialSucceeded = m_GameEngine.TryInitialBoard(boardHeight,
-                                                boardWidth, out errorMessage);
-                if (!initialSucceeded)
-                {
-                    Console.WriteLine(errorMessage + " try again.");
-                }
-            }
-        }
-
         private string receivePlayerName()
         {
             string playerName;
@@ -270,127 +232,6 @@ namespace Ex02_MemoryGameConsole.UserInterface
             gameOver = !isLeftCardsToChoose;
 
             return gameOver;
-        }
-
-        private int receiveBoardWidth()
-        {
-            int boardWidth;
-   
-            Console.WriteLine("Enter board width: (columns)");
-            boardWidth = receiveMeasure();
-
-            return boardWidth;
-        }
-
-        private int receiveBoardHeight()
-        {
-            int boardHeight;
-
-            Console.WriteLine("Enter board height: (rows)");
-            boardHeight = receiveMeasure();
-
-            return boardHeight;
-        }
-
-        private int receiveMeasure()
-        {
-            bool isValidInput = false, isPositive, isInteger;
-            int? measure = null;
-            string inputStr;
-
-            while (!isValidInput)
-            {
-                inputStr = Console.ReadLine();
-                isInteger = int.TryParse(inputStr, out int tmpMeasure);
-                if (!isInteger)
-                {
-                    Console.WriteLine("Input must be an integer. Try again\n");
-                    continue;
-                }
-
-                isPositive = tmpMeasure > 0;
-                if (!isPositive)
-                {
-                    Console.WriteLine("Input must be an positive. Try again\n");
-                    continue;
-                }
-
-                isValidInput = true;
-                measure = tmpMeasure;
-            }
-
-            return measure.Value; //Always get value because always first iteration happens.
-        }
-
-        private void printBoard()
-        {
-            GameBoard board = m_GameEngine.Board;
-            int rows = board.Height;
-            int cols = board.Width;
-
-            printBoardFirstRow(cols);
-            printBoardEqualsRow(cols);
-            printBoardCardsRow(rows, cols, board);
-        }
-
-        private void printBoardFirstRow(int i_Cols)
-        {
-            StringBuilder stringToPrint = new StringBuilder();
-
-            stringToPrint.Append("    ");
-            char colCharacter = 'A';
-            for (int j = 0; j < i_Cols; j++)
-            {
-                stringToPrint.Append(colCharacter + "   ");
-                colCharacter++;
-            }
-
-            stringToPrint.Append("  ");
-            Console.WriteLine(stringToPrint);
-        }
-
-        private void printBoardEqualsRow(int i_Cols)
-        {
-            StringBuilder stringToPrint = new StringBuilder();
-            
-            stringToPrint.Append("  ");
-            stringToPrint.Append("==");
-            for (int j = 0; j < i_Cols - 1; j++)
-            {
-                stringToPrint.Append("====");
-            }
-
-            stringToPrint.Append("===");
-            Console.WriteLine(stringToPrint);
-        }
-
-        private void printBoardCardsRow(int i_Rows, int i_Cols, GameBoard i_Board)
-        {
-            StringBuilder stringToPrint = new StringBuilder();
-
-            for (int i = 0; i < i_Rows; i++)
-            {
-                stringToPrint.Append((i+1) + " ");
-                for (int j = 0; j < i_Cols; j++)
-                {
-                    stringToPrint.Append("| ");
-                    if (i_Board.CardsMatrix[i,j].IsFlipped == false)
-                    {
-                        stringToPrint.Append(' ');
-                    }
-                    else
-                    {
-                        stringToPrint.Append(i_Board.CardsMatrix[i, j].Content);
-                    }
-
-                    stringToPrint.Append(' ');
-                }
-
-                stringToPrint.Append('|');
-                Console.WriteLine(stringToPrint);
-                printBoardEqualsRow(i_Cols);
-                stringToPrint.Clear();
-            }
         }
 
         private void printStatistics()

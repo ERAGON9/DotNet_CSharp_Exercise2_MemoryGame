@@ -10,14 +10,9 @@ namespace Ex02_MemoryGameConsole.GameLogic
     internal class GameBoard
     {
         private Card[,] m_CardsMatrix;
-        private int m_Width;
-        private int m_Height; //not readonly, it can change if choose to play again.
+        private int m_Width;  //Not readonly, it can change if choose to play again.
+        private int m_Height; //Not readonly, it can change if choose to play again.
         private int m_NumberOfUnflippedPairs;
-        private const int k_MinRowsColsSize = 4;
-        private const int k_MaxRowsColsSize = 6;
-
-        //private const bool k_TrueInitialize = true;
-        //private const bool k_FalseInitialize = false;
 
         public int Width
         {
@@ -62,22 +57,14 @@ namespace Ex02_MemoryGameConsole.GameLogic
         {
             bool isValid = false;
 
-            if (i_Rows < k_MinRowsColsSize || i_Rows > k_MaxRowsColsSize)
-            {
-                o_ErrorMesage = "Rows not at range 4-6 (include).";
-            }
-            else if (i_Cols < k_MinRowsColsSize || i_Cols > k_MaxRowsColsSize)
-            {
-                o_ErrorMesage = "Cols not at range 4-6 (include).";
-            }
-            else if (i_Rows * i_Cols % 2 != 0)
+            if (i_Rows * i_Cols % 2 != 0)
             {
                 o_ErrorMesage = "Board must have an even number of cells.";
             }
             else
             {
                 isValid = true;
-                o_ErrorMesage = "All valid.";
+                o_ErrorMesage = null;
             }
 
             return isValid;
@@ -88,28 +75,32 @@ namespace Ex02_MemoryGameConsole.GameLogic
             int rows = m_Height;
             int cols = m_Width;
             int totalCells = rows * cols;
-            char currentCharacter = 'A';
-            char[] characters = new char[totalCells];
+            uint currentValue = 0;
+            uint[] numbersToShuffle = new uint[totalCells];
 
             for (int i = 0; i < totalCells; i += 2)
             {
-                characters[i] = currentCharacter;
-                characters[i + 1] = currentCharacter;
-                currentCharacter++;
+                numbersToShuffle[i] = currentValue;
+                numbersToShuffle[i + 1] = currentValue;
+                currentValue++;
             }
 
             Random randomNumber = new Random();
-            characters = characters.OrderBy(x => randomNumber.Next()).ToArray();
-            int charactersArrayIndex = 0;
+            for (int i = 0; i < numbersToShuffle.Length - 1; i++)
+            {
+                int j = randomNumber.Next(i, numbersToShuffle.Length);
+                uint temp = numbersToShuffle[i];
+                numbersToShuffle[i] = numbersToShuffle[j];
+                numbersToShuffle[j] = temp;
+            }
 
-            //foreach (Card card in m_CardsMatrix)
-
+            int arrayIndex = 0;
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    m_CardsMatrix[i, j] = new Card(characters[charactersArrayIndex]);
-                    charactersArrayIndex++;
+                    m_CardsMatrix[i, j] = new Card(numbersToShuffle[arrayIndex]);
+                    arrayIndex++;
                 }
             }
         }
@@ -201,30 +192,3 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
     }
 }
-
-//public void PrintMatrix(Card[,] i_CardsMatrix)
-//{
-//    int rows = i_CardsMatrix.GetLength(0);
-//    int cols = i_CardsMatrix.GetLength(1);
-
-//    for (int i = 0; i < rows; i++)
-//    {
-//        for (int j = 0; j < cols; j++)
-//        {
-//            Console.Write(i_CardsMatrix[i, j].Content + " ");
-//        }
-//        Console.WriteLine();
-//    }
-//}
-
-//private void checkMatrixCellsAmountEven()
-//{
-//    int rows = CardsMatrix.GetLength(0);
-//    int cols = CardsMatrix.GetLength(1);
-//    int totalCells = rows * cols;
-
-//    if (totalCells % 2 != 0)
-//    {
-//        throw new Exception("Matrix must have an even number of cells.");
-//    }
-//}

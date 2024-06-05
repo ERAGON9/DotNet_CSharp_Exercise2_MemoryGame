@@ -44,6 +44,8 @@
     <Compile Include="GameLogic\Turn.cs" />
     <Compile Include="GameLogic\Player.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="UserInterface\BoardUI.cs" />
+    <Compile Include="UserInterface\MessageUI.cs" />
     <Compile Include="UserInterface\UI.cs" />
   </ItemGroup>
   <ItemGroup>
