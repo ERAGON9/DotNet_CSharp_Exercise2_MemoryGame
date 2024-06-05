@@ -36,7 +36,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameLogic\eCurrentCard.cs" />
     <Compile Include="GameLogic\Card.cs" />
     <Compile Include="GameLogic\eCurrentPlayer.cs" />
     <Compile Include="GameLogic\GameBoard.cs" />

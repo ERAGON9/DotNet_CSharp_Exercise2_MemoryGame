@@ -11,12 +11,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
     {
         private Card m_Card1;
         private Card m_Card2;
-        private eCurrentCard m_CurrentCard = eCurrentCard.Card1;
-
-        private eCurrentPlayer m_CurrentPlayer; //לא מדויק, לחשוב אם צריכים בכלל
-        //אולי שווה להחליף פשוט במערך של שחקנים ובטיפוס השחקן
-        //private Player m_CurrentPlayer;
-        private string m_CurrentPlayerType;
+        private Player m_CurrentPlayer; //אולי שווה להחליף פשוט במערך של שחקנים ובטיפוס השחקן
 
         //אם מוסיפים את השחקן ממש כאן, אז צריך להוריד את הבנאי פה 
         public Turn()
