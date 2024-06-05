@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 
 namespace Ex02_MemoryGameConsole.UserInterface
 {
-    internal class UI
+    internal class ProgramUI
     {
         private GameData m_GameEngine;
         private MessageUI m_Messages = new MessageUI();
         private BoardUI m_Board = new BoardUI();
         private bool m_ProgramStillRunning = true;
+        private string m_CurrentUserType = "Person";
 
         public void RunProgram()
         {
@@ -43,7 +44,8 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 m_Board.PrintBoard(m_GameEngine.Board);
                 Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
                                   " first square:");
-                string chosenSquare1 = getValidSquareFromPlayer();
+                
+                string chosenSquare1 = chooseSquare1();
                 if (isPlayerQuit(chosenSquare1))
                 {
                     quitGame();
@@ -70,6 +72,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 if (!isAPair)
                 {
                     System.Threading.Thread.Sleep(2000);
+                    switchToNextPlayer();
                 }
 
                 gameOver = isGameOver();
@@ -85,6 +88,24 @@ namespace Ex02_MemoryGameConsole.UserInterface
             }
         }
 
+        private string chooseSquare1()
+        {
+            string chosenSquare1;
+            string currentPlayerType = m_GameEngine.CurrentTurn.CurrentPlayer.Type //maybe enum?
+                //כדי שיעבוד צריך שהשחקן הנוכחי יהיה ממש 'שחקן' ולא מה שיש לנו שם
+                // (enum)
+                
+
+            if (currentPlayerType == "Computer")
+            {
+                chosenSquare1 = m_GameEngine.ComputerChoosingSquare();
+            }
+            else
+            {
+                chosenSquare1 = getValidSquareFromPlayer();
+            }
+        }
+
         private bool wantsToPlayAgain()
         {
             string input;
@@ -96,6 +117,12 @@ namespace Ex02_MemoryGameConsole.UserInterface
             playAgain = input == "1"; //maybe change it to enum or somethig
 
             return playAgain;
+        }
+
+        private void switchToNextPlayer()
+        {
+            m_GameEngine.switchToNextPlayer();
+            m_CurrentUserType = m_GameEngine.GetCurrenPlayerType();
         }
 
         private void quitGame()
@@ -153,7 +180,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
         {
             const string quitString = "Q";
             bool isPlayerQuit = i_PlayerInput == quitString;
-            
+
             return isPlayerQuit;
         }
 
@@ -228,7 +255,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
         {
             bool gameOver;
             bool isLeftCardsToChoose = m_GameEngine.IsThereUnflippedCardsOnBoard();
-            
+
             gameOver = !isLeftCardsToChoose;
 
             return gameOver;

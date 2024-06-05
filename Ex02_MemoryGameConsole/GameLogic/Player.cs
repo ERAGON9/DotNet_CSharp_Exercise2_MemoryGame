@@ -10,6 +10,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
     {
         private readonly string m_Name;
         private int m_Points;
+        private string m_type; //maybe enum?
 
         public Player(string i_PlayerName)
         {
@@ -30,6 +31,19 @@ namespace Ex02_MemoryGameConsole.GameLogic
             get
             {
                 return m_Points;
+            }
+        }
+
+        public string Type
+        {
+            get
+            {
+                return m_type;
+            }
+
+            set
+            {
+                m_type = value;
             }
         }
 

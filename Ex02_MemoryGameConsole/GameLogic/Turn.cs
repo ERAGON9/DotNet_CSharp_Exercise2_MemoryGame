@@ -11,9 +11,14 @@ namespace Ex02_MemoryGameConsole.GameLogic
     {
         private Card m_Card1;
         private Card m_Card2;
-        //private eCurrentCard m_CurrentCard = eCurrentCard.Card1;
-        private eCurrentPlayer m_CurrentPlayer;
+        private eCurrentCard m_CurrentCard = eCurrentCard.Card1;
 
+        private eCurrentPlayer m_CurrentPlayer; //לא מדויק, לחשוב אם צריכים בכלל
+        //אולי שווה להחליף פשוט במערך של שחקנים ובטיפוס השחקן
+        //private Player m_CurrentPlayer;
+        private string m_CurrentPlayerType;
+
+        //אם מוסיפים את השחקן ממש כאן, אז צריך להוריד את הבנאי פה 
         public Turn()
         {
             m_CurrentPlayer = eCurrentPlayer.Player1;
@@ -27,7 +32,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
         }
 
-        public void SwitchPlayerTurn()
+        public void SwitchPlayerTurn() //צריך לשנות לדעתי ופשוט שהשינוי יהיה באינדקס של המערך
         {
             if (m_CurrentPlayer == eCurrentPlayer.Player1)
             {
@@ -54,6 +59,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
         {
             m_Card1 = null;
         }
+
         public Card Card2
         {
             get
@@ -68,6 +74,14 @@ namespace Ex02_MemoryGameConsole.GameLogic
         public void ResetCard2()
         {
             m_Card2 = null;
+        }
+
+        public string CurrentPlayerType
+        {
+            get
+            {
+                return m_CurrentPlayerType;
+            }
         }
 
         public void FlipCard1()

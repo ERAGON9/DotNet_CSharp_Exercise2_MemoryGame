@@ -40,8 +40,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
         public bool TryInitialGameBoard(int i_Rows, int i_Cols, out string o_ErrorMesage)
         {
-            bool isValid = isBoardSizeValid(i_Rows, i_Cols, out o_ErrorMesage);
-            
+            bool isValid = isEvenSquaresAmount(i_Rows, i_Cols, out o_ErrorMesage);
             if (isValid)
             {
                 m_Width = i_Cols;
@@ -53,21 +52,20 @@ namespace Ex02_MemoryGameConsole.GameLogic
             return isValid;
         }
 
-        private bool isBoardSizeValid(int i_Rows, int i_Cols, out string o_ErrorMesage)
+        private bool isEvenSquaresAmount(int i_Rows, int i_Cols, out string o_ErrorMesage)
         {
-            bool isValid = false;
+            bool countOfSquaresIsEven = i_Rows * i_Cols % 2 != 0;
 
-            if (i_Rows * i_Cols % 2 != 0)
+            if (!countOfSquaresIsEven)
             {
                 o_ErrorMesage = "Board must have an even number of cells.";
             }
             else
             {
-                isValid = true;
                 o_ErrorMesage = null;
             }
 
-            return isValid;
+            return countOfSquaresIsEven;
         }
 
         private void fillCardsMatrix()
@@ -134,7 +132,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
         public bool IsValidSquare(string i_Square, out string o_ErrorMessage)
         {
             bool isValid, isOnBoard;
-            o_ErrorMessage = String.Empty; //If there is no error, the Player not gonna use the error message so it can be empty
+            o_ErrorMessage = null;
 
             isOnBoard = checkIfSquareOnBoard(i_Square, ref o_ErrorMessage);
             isValid = isOnBoard && checkIfUnflippedCard(i_Square, ref o_ErrorMessage);
@@ -173,7 +171,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
             Card card = GetCard(i_Square);
             bool isUnflippedCard = !card.IsFlipped;
 
-            if(!isUnflippedCard)
+            if (!isUnflippedCard)
             {
                 io_ErrorMessage = "The card has already been discovered, choose another one.";
             }
