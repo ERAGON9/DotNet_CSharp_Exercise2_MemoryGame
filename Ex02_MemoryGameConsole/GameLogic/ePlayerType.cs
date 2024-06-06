@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Ex02_MemoryGameConsole.GameLogic
 {
-    public enum eCurrentPlayer
+    public enum ePlayerType
     {
-        Player1,
-        Player2
+        Player,
+        Computer
     }
 }

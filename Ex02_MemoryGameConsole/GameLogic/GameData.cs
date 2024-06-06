@@ -9,19 +9,22 @@ namespace Ex02_MemoryGameConsole.GameLogic
 {
     internal class GameData
     {
-        private Player m_Player1;
-        private Player m_Player2;
-        private readonly bool m_AgainstComputer;
+        private List<Player> m_Players; //List because if in the future we want to change
+                                        //the number of players during the game.
         private GameBoard m_Board;
         private Turn m_CurrentTurn;
 
-        public GameData(string i_NamePlayer1, string i_NamePlayer2, bool i_AgainstComputer)
+        public GameData(int i_NumOfPlayers, string[] i_PlayersNames,
+                        string[] i_PlayersTypes)
         {
-            m_Player1 = new Player(i_NamePlayer1);
-            m_Player2 = new Player(i_NamePlayer2);
-            m_AgainstComputer = i_AgainstComputer; //צריך?
+            m_Players = new List<Player>(i_NumOfPlayers);
+            for (int i = 0; i < i_NumOfPlayers; i++)
+            {
+                m_Players.Add(new Player(i_PlayersNames[i], i_PlayersTypes[i]));
+            }
+
             m_Board = new GameBoard();
-            m_CurrentTurn = new Turn();
+            m_CurrentTurn = new Turn(m_Players[0]);
         }
 
         public GameBoard Board
@@ -40,9 +43,30 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
         } 
 
+        public string ComputerChoosingSquare() // Need to create this method!!!!
+        {
+            return null;
+        }
+
         public string GetCurrenPlayerType()
         {
-            return CurrentTurn.CurrentPlayerType;
+            return getPlayerTypeFromEnum(CurrentTurn.CurrentPlayer.Type);
+        }
+
+        private string getPlayerTypeFromEnum(ePlayerType i_PlayerTypeEnum)
+        {
+            string value;
+
+            if (i_PlayerTypeEnum == ePlayerType.Player)
+            {
+                value = "Player";
+            }
+            else
+            {
+                value = "Computer";
+            }
+
+            return value;
         }
 
         public void FlipCard1InCurrentTurn(string i_Square)
@@ -57,11 +81,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
             CurrentTurn.FlipCard2();
         }
 
-        public void UnflippeCardsInCurrentTurn()
-        {
-            CurrentTurn.UnflippedCards();
-        }
-
         public bool TryInitialBoard(int i_Rows, int i_Cols, out string o_ErrorMessage)
         {
             return Board.TryInitialGameBoard(i_Rows, i_Cols, out o_ErrorMessage);
@@ -74,7 +93,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
         public string GetPlayerNameOfCurrentTurn()
         {
-            string playerName = GetPlayerOfCurrentTurn().Name;
+            string playerName = getPlayerOfCurrentTurn().Name;
 
             return playerName;
         }
@@ -91,43 +110,44 @@ namespace Ex02_MemoryGameConsole.GameLogic
             return isAPair;
         }
 
-        public void OperatesByChosenCards()
+        public void AddPointToCurrentPlayer()
         {
-            if (IsCardsTheSame())
-            {
-                Player currentPlayer = GetPlayerOfCurrentTurn();
-                currentPlayer.AddPointToPlayer();
-            }
-            else
-            {
-                m_CurrentTurn.UnflippedCards();
-                m_CurrentTurn.SwitchPlayerTurn();
-            }
-
-            m_CurrentTurn.ResetCard1();
-            m_CurrentTurn.ResetCard2();
+            m_CurrentTurn.CurrentPlayer.AddPointToPlayer();
         }
 
-        private Player GetPlayerOfCurrentTurn()
+        public void UnflippedCardsForCurrentTurn()
         {
-            Player player;
-            
-            if (CurrentTurn.CurrentPlayer == eCurrentPlayer.Player1)
-            {
-                player = m_Player1;
-            }
-            else
-            {
-                player = m_Player2;
-            }
-
-            return player;
+            m_CurrentTurn.UnflippedCards();
         }
 
-        public void GetPlayersScore(out int o_ScorePlayer1, out int o_ScorePlayer2)
+        public void SwitchToNextPlayer()
         {
-            o_ScorePlayer1 = m_Player1.Points;
-            o_ScorePlayer2 = m_Player2.Points;
+            Player currentPlayer = m_CurrentTurn.CurrentPlayer;
+
+            for (int i = 0; i < m_Players.Count; i++)
+            {
+                if (m_Players[i] == currentPlayer)
+                {
+                    int nextPlayerIndex = (i + 1) % m_Players.Count;
+                    m_CurrentTurn.SwitchPlayerTurn(m_Players[nextPlayerIndex]);
+                    break;
+                }
+            }
+        }
+
+        private Player getPlayerOfCurrentTurn()
+        {
+            return m_CurrentTurn.CurrentPlayer;
+        }
+
+        public void GetPlayersScore(out int[] o_PlayersScores)
+        {
+            o_PlayersScores = new int[m_Players.Count];
+
+            for (int i = 0; i < m_Players.Count; i++)
+            {
+                o_PlayersScores[i] = m_Players[i].Points;
+            }
         }
     }
 }

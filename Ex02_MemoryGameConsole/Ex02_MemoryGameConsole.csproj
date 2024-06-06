@@ -37,7 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameLogic\Card.cs" />
-    <Compile Include="GameLogic\eCurrentPlayer.cs" />
+    <Compile Include="GameLogic\ePlayerType.cs" />
     <Compile Include="GameLogic\GameBoard.cs" />
     <Compile Include="GameLogic\GameData.cs" />
     <Compile Include="GameLogic\Turn.cs" />

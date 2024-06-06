@@ -54,7 +54,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
         private bool isEvenSquaresAmount(int i_Rows, int i_Cols, out string o_ErrorMesage)
         {
-            bool countOfSquaresIsEven = i_Rows * i_Cols % 2 != 0;
+            bool countOfSquaresIsEven = i_Rows * i_Cols % 2 == 0;
 
             if (!countOfSquaresIsEven)
             {
@@ -186,7 +186,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
             o_Col = (colChar - 'A') + 1;
             o_Row = rowChar - '0';
         }
-
 
     }
 }

@@ -10,12 +10,13 @@ namespace Ex02_MemoryGameConsole.GameLogic
     {
         private readonly string m_Name;
         private int m_Points;
-        private string m_type; //maybe enum?
+        private readonly ePlayerType m_type;
 
-        public Player(string i_PlayerName)
+        public Player(string i_PlayerName, string i_PlayerType)
         {
             m_Name = i_PlayerName;
             m_Points = 0;
+            m_type = getPlayerTypeFromString(i_PlayerType);
         }
 
         public string Name 
@@ -34,22 +35,33 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
         }
 
-        public string Type
+        public ePlayerType Type
         {
             get
             {
                 return m_type;
-            }
-
-            set
-            {
-                m_type = value;
             }
         }
 
         public void AddPointToPlayer()
         {
             m_Points++;
+        }
+
+        private ePlayerType getPlayerTypeFromString(string i_PlayerTypeString)
+        {
+            ePlayerType value;
+
+            if (i_PlayerTypeString == "Player")
+            {
+                value = ePlayerType.Player;
+            }
+            else
+            {
+                value = ePlayerType.Computer;
+            }
+
+            return value;
         }
     }
 }

@@ -14,29 +14,9 @@ namespace Ex02_MemoryGameConsole.GameLogic
         private Player m_CurrentPlayer; //אולי שווה להחליף פשוט במערך של שחקנים ובטיפוס השחקן
 
         //אם מוסיפים את השחקן ממש כאן, אז צריך להוריד את הבנאי פה 
-        public Turn()
+        public Turn(Player i_FirstPlayer)
         {
-            m_CurrentPlayer = eCurrentPlayer.Player1;
-        }
-
-        public eCurrentPlayer CurrentPlayer
-        {
-            get
-            {
-                return m_CurrentPlayer;
-            }
-        }
-
-        public void SwitchPlayerTurn() //צריך לשנות לדעתי ופשוט שהשינוי יהיה באינדקס של המערך
-        {
-            if (m_CurrentPlayer == eCurrentPlayer.Player1)
-            {
-                m_CurrentPlayer = eCurrentPlayer.Player2;
-            }
-            else
-            {
-                m_CurrentPlayer = eCurrentPlayer.Player1;
-            }
+            m_CurrentPlayer = i_FirstPlayer;
         }
 
         public Card Card1
@@ -50,10 +30,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
                 m_Card1 = value;
             }
         }
-        public void ResetCard1()
-        {
-            m_Card1 = null;
-        }
 
         public Card Card2
         {
@@ -66,17 +42,33 @@ namespace Ex02_MemoryGameConsole.GameLogic
                 m_Card2 = value;
             }
         }
+
+        public Player CurrentPlayer
+        {
+            get
+            {
+                return m_CurrentPlayer;
+            }
+        }
+
+        public void ResetCard1()
+        {
+            m_Card1 = null;
+        }
+
         public void ResetCard2()
         {
             m_Card2 = null;
         }
 
-        public string CurrentPlayerType
+        public void SwitchPlayerTurn(Player i_NextPlayer)
         {
-            get
-            {
-                return m_CurrentPlayerType;
-            }
+            m_CurrentPlayer = i_NextPlayer;
+        }
+
+        public ePlayerType GetCurrentPlayerType()
+        {
+            return m_CurrentPlayer.Type;
         }
 
         public void FlipCard1()

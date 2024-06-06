@@ -12,7 +12,7 @@ namespace Ex02_MemoryGameConsole
     {
         public static void Main()
         {
-            UI userInterface = new UI();
+            ProgramUI userInterface = new ProgramUI();
 
             userInterface.RunProgram();
 
