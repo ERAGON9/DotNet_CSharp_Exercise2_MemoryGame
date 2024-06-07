@@ -9,6 +9,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
     public enum ePlayerType
     {
         Player,
-        Computer
+        Computer,
     }
 }

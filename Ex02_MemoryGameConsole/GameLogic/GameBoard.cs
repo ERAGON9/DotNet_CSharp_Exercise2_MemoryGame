@@ -12,7 +12,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
         private Card[,] m_CardsMatrix;
         private int m_Width;  //Not readonly, it can change if choose to play again.
         private int m_Height; //Not readonly, it can change if choose to play again.
-        private int m_NumberOfUnflippedPairs;
 
         public int Width
         {
@@ -41,6 +40,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
         public bool TryInitialGameBoard(int i_Rows, int i_Cols, out string o_ErrorMesage)
         {
             bool isValid = isEvenSquaresAmount(i_Rows, i_Cols, out o_ErrorMesage);
+
             if (isValid)
             {
                 m_Width = i_Cols;
@@ -109,7 +109,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
             foreach (Card card in m_CardsMatrix)
             {
-                if(!card.IsFlipped)
+                if (!card.IsFlipped)
                 {
                     isThereUnflippedCards = true;
                     break;
@@ -121,9 +121,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
         public Card GetCard(int i_Row, int i_Col)
         {
-            Card card;
-
-            card = m_CardsMatrix[i_Row - 1, i_Col - 1];
+            Card card = m_CardsMatrix[i_Row - 1, i_Col - 1];
 
             return card;
         }
@@ -131,53 +129,54 @@ namespace Ex02_MemoryGameConsole.GameLogic
         public bool IsValidSquare(int i_Row, int i_Col, out string o_ErrorMessage)
         {
             bool isValid, isOnBoard;
-            o_ErrorMessage = null;
 
-            isOnBoard = checkIfSquareOnBoard(i_Row, i_Col, ref o_ErrorMessage);
-            isValid = isOnBoard && checkIfUnflippedCard(i_Row, i_Col, ref o_ErrorMessage);
+            isOnBoard = checkIfSquareOnBoard(i_Row, i_Col, out o_ErrorMessage);
+            isValid = isOnBoard && checkIfUnflippedCard(i_Row, i_Col, out o_ErrorMessage);
 
             return isValid;
         }
 
-        private bool checkIfSquareOnBoard(int i_Row, int i_Col, ref string io_ErrorMessage)
+        private bool checkIfSquareOnBoard(int i_Row, int i_Col, out string o_ErrorMessage)
         {
-            bool isValidSquare = false, isValidRow, isValidCol;
+            bool isValidSquare = false;
+            bool isValidRow, isValidCol;
 
             isValidRow = i_Row >= 1 && i_Row <= m_Height;
             isValidCol = i_Col >= 1 && i_Col <= m_Width;
             if (!isValidRow)
             {
-                io_ErrorMessage = "Wrong row number. Row must be between 1 and " + m_Height;
+                o_ErrorMessage = "Wrong row number. Row must be between 1 and " + m_Height;
 
             }
             else if (!isValidCol)
             {
-                char endColChar = (char)('A' + m_Width - 1);
-                io_ErrorMessage = "Wrong column number. Column must be between A and " + endColChar;
+                char lastColChar = (char)('A' + m_Width - 1);
+                o_ErrorMessage = "Wrong column number. Column must be between A and " + lastColChar;
             }
             else
             {
                 isValidSquare = true;
+                o_ErrorMessage = null;
             }
 
-            //isValidSquare = isValidRow && isValidCol;
             return isValidSquare;
         }
 
-        private bool checkIfUnflippedCard(int i_Row, int i_Col, ref string io_ErrorMessage)
+        private bool checkIfUnflippedCard(int i_Row, int i_Col, out string o_ErrorMessage)
         {
             Card card = GetCard(i_Row, i_Col);
             bool isUnflippedCard = !card.IsFlipped;
 
             if (!isUnflippedCard)
             {
-                io_ErrorMessage = "The card has already been discovered, choose another one.";
+                o_ErrorMessage = "The card has already been discovered, choose another one.";
+            }
+            else
+            {
+                o_ErrorMessage = null;
             }
 
             return isUnflippedCard;
         }
-
-
-
     }
 }

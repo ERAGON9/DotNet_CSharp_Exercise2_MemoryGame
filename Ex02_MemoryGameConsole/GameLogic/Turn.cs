@@ -14,7 +14,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
         private Card m_Card2;
         private Player m_CurrentPlayer;
         
-
         public Turn(Player i_FirstPlayer)
         {
             m_CurrentPlayer = i_FirstPlayer;
@@ -52,24 +51,9 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
         }
 
-        public void ResetCard1()
-        {
-            m_Card1 = null;
-        }
-
-        public void ResetCard2()
-        {
-            m_Card2 = null;
-        }
-
         public void SwitchPlayerTurn(Player i_NextPlayer)
         {
             m_CurrentPlayer = i_NextPlayer;
-        }
-
-        public ePlayerType GetCurrentPlayerType()
-        {
-            return m_CurrentPlayer.Type;
         }
 
         public void FlipCard1()

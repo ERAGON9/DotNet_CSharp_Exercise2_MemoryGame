@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex02_MemoryGameConsole
+namespace Ex02_MemoryGameConsole.UserInterface
 {
     public class Program
     {
@@ -15,9 +15,6 @@ namespace Ex02_MemoryGameConsole
             ProgramUI userInterface = new ProgramUI();
 
             userInterface.RunProgram();
-
-            //GameData gameData = new GameData("Lior", "Noa", false);
-
             Console.ReadLine();
         }
     }

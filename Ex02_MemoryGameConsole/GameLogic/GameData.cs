@@ -36,14 +36,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
         } 
 
-        public Turn CurrentTurn
-        {
-            get
-            {
-                return m_CurrentTurn;
-            }
-        } 
-
         public string ComputerChoosingSquare()
         {
             Random random = new Random();
@@ -80,7 +72,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
         public string GetCurrenPlayerType()
         {
-            return getPlayerTypeFromEnum(CurrentTurn.CurrentPlayer.Type);
+            return getPlayerTypeFromEnum(m_CurrentTurn.CurrentPlayer.Type);
         }
 
         private string getPlayerTypeFromEnum(ePlayerType i_PlayerTypeEnum)
@@ -136,9 +128,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
         public bool TryInitialBoard(int i_Rows, int i_Cols, out string o_ErrorMessage)
         {
-            bool isInitialized;
-
-            isInitialized = m_Board.TryInitialGameBoard(i_Rows, i_Cols, out o_ErrorMessage);
+            bool isInitialized = m_Board.TryInitialGameBoard(i_Rows, i_Cols, out o_ErrorMessage);
 
             return isInitialized;
         }
@@ -146,9 +136,12 @@ namespace Ex02_MemoryGameConsole.GameLogic
         public bool IsValidSquareInput(string i_Square, out string o_Message)
         {
             int row, col;
+            bool isValid;
 
             extractRowAndColFromSquareString(i_Square, out row, out col);
-            return m_Board.IsValidSquare(row, col, out o_Message);
+            isValid = m_Board.IsValidSquare(row, col, out o_Message);
+
+            return isValid;
         }
 
         public string GetPlayerNameOfCurrentTurn()
@@ -224,10 +217,12 @@ namespace Ex02_MemoryGameConsole.GameLogic
             return playersNames;
         }
 
-        private void extractRowAndColFromSquareString(string i_Square, out int o_Row, out int o_Col)
+        private void extractRowAndColFromSquareString(string i_Square, out int o_Row,
+                                                      out int o_Col)
         {
             char colChar = i_Square[0];
             char rowChar = i_Square[1];
+
             o_Col = (colChar - 'A') + 1;
             o_Row = rowChar - '0';
         }

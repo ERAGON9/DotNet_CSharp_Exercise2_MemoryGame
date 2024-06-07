@@ -8,22 +8,22 @@ namespace Ex02_MemoryGameConsole.GameLogic
 {
     internal class Player
     {
-        private readonly string m_Name;
+        private readonly string r_Name;
         private int m_Points;
-        private readonly ePlayerType m_type;
+        private readonly ePlayerType r_type;
 
         public Player(string i_PlayerName, string i_PlayerType)
         {
-            m_Name = i_PlayerName;
+            r_Name = i_PlayerName;
             m_Points = 0;
-            m_type = extractPlayerTypeFromString(i_PlayerType);
+            r_type = extractPlayerTypeFromString(i_PlayerType);
         }
 
         public string Name 
         {
             get
             {
-                return m_Name;
+                return r_Name;
             } 
         }
 
@@ -39,7 +39,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
         {
             get
             {
-                return m_type;
+                return r_type;
             }
         }
 

@@ -14,7 +14,6 @@ namespace Ex02_MemoryGameConsole.UserInterface
         private MessageUI m_Messages = new MessageUI();
         private BoardUI m_Board = new BoardUI();
         private bool m_ProgramStillRunning = true;
-
         private const string k_QuitString = "Q";
         private const int k_NumOfPlayers = 2;
 
@@ -74,7 +73,6 @@ namespace Ex02_MemoryGameConsole.UserInterface
             Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
                               " first square:");
 
-            //string chosenSquare1 = chooseSquare1();
             string chosenSquare1 = chooseSquare();
             if (isPlayerQuit(chosenSquare1))
             {
@@ -89,10 +87,9 @@ namespace Ex02_MemoryGameConsole.UserInterface
         private void secondPartOfTurn()
         {
             Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
-                  " secound square:");
-
-            //string chosenSquare2 = chooseSquare2();
+                              " secound square:");
             string chosenSquare2 = chooseSquare();
+
             if (isPlayerQuit(chosenSquare2))
             {
                 quitGame();
@@ -145,15 +142,35 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private bool wantsToPlayAgain()
         {
-            string input;
-            bool playAgain;
+            const string k_PlayAgainOption = "yes";
 
             Console.WriteLine("Want another round?");
-            Console.WriteLine("Press 1 if you want to play again or 0 to exit");
-            input = Console.ReadLine();
-            playAgain = input == "1"; //maybe change it to enum or somethig
+            Console.WriteLine("For play again choose 'yes' else 'no'.");
+            string playAgainOption = getPlayAgainOption();
+            bool playAgain = playAgainOption == k_PlayAgainOption;
 
             return playAgain;
+        }
+
+        private string getPlayAgainOption()
+        {
+            bool isValidInput = false;
+            const string k_PlayAgainOption = "yes";
+            const string k_QuitOption = "no";
+            string input = null;
+
+            while (!isValidInput)
+            {
+                input = Console.ReadLine();
+                if (input == k_PlayAgainOption || input == k_QuitOption)
+                {
+                    break;
+                }
+
+                Console.WriteLine("Invalid option, try again");
+            }
+
+            return input;
         }
 
         private void quitGame()
@@ -188,9 +205,9 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private string getSquare()
         {
+            bool isValidSquare = false;
             string playerInput = null; //Always get value because, always first
                                        //iteration of while loop happens.
-            bool isValidSquare = false;
 
             while (!isValidSquare)
             {
@@ -237,7 +254,6 @@ namespace Ex02_MemoryGameConsole.UserInterface
             playersNames[0] = receivePlayerName();
             playersTypes[0] = "Player";
             playersNames[1] = chooseAndReceiveSecondPlayer(out playersTypes[1]);
-
             m_GameEngine = new GameData(k_NumOfPlayers, playersNames, playersTypes);
         }
 
@@ -251,7 +267,8 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private string chooseAndReceiveSecondPlayer(out string o_SecondPlayerType)
         {
-            string opponent, secoundPlayerName = null;
+            string opponent;
+            string secoundPlayerName = null;
             bool validInput = false;
             o_SecondPlayerType = null;
 

@@ -9,7 +9,6 @@ namespace Ex02_MemoryGameConsole.UserInterface
 {
     internal class BoardUI
     {
-
         private const int k_MinRowsColsSize = 4;
         private const int k_MaxRowsColsSize = 6;
 
@@ -23,7 +22,6 @@ namespace Ex02_MemoryGameConsole.UserInterface
             {
                 boardWidth = receiveBoardWidth();
                 boardHeight = receiveBoardHeight();
-
                 initialSucceeded = i_GameEngine.TryInitialBoard(boardHeight,
                                                 boardWidth, out errorMessage);
                 if (!initialSucceeded)
@@ -56,18 +54,22 @@ namespace Ex02_MemoryGameConsole.UserInterface
         private int receiveMeasure()
         {
             bool isValidInput = false;
-            int measure = -1;  //Always get value, because always first iteration
-                               //of while loop happens.
+            int ?measure = null;  //Always get value, because always first iteration
+                                  //of while loop happens.
             string inputStr;
 
             while (!isValidInput)
             {
                 inputStr = Console.ReadLine();
-                isValidInput = isInteger(inputStr, out measure) &&
-                               isSizeInRange(measure);
+                isValidInput = isInteger(inputStr, out int tmpMeasure) &&
+                               isSizeInRange(tmpMeasure);
+                if (isValidInput)
+                {
+                    measure = tmpMeasure;
+                }
             }
 
-            return measure;
+            return measure.Value;
         }
 
         private bool isInteger(string i_IntAsString, out int o_TmpMeasure)
@@ -76,19 +78,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
             if (!isValid)
             {
-                Console.WriteLine("Input must be an integer. Try again");
-            }
-
-            return isValid;
-        }
-
-        private bool isPositive(int i_Number) //Check If neccessary.
-        {
-            bool isValid = i_Number > 0;
-
-            if (!isValid)
-            {
-                Console.WriteLine("Input must be an positive. Try again");
+                Console.WriteLine("Input must be an integer, try again");
             }
 
             return isValid;
@@ -100,7 +90,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
             if (i_Number < k_MinRowsColsSize || i_Number > k_MaxRowsColsSize)
             {
-                Console.WriteLine("not at range 4-6 (include). Try again.");
+                Console.WriteLine("not at range 4-6 (include), try again.");
                 isValid = false;
             }
 

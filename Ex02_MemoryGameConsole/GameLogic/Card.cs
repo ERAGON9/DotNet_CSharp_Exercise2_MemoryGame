@@ -9,8 +9,13 @@ namespace Ex02_MemoryGameConsole.GameLogic
     internal class Card
     {
         private bool m_IsFlipped;
-
         private uint m_Content;
+
+        public Card(uint i_Data)
+        {
+            m_IsFlipped = false;
+            m_Content = i_Data;
+        }
 
         public bool IsFlipped
         {
@@ -34,12 +39,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
             {
                 m_Content = value;
             }
-        }
-
-        public Card(uint i_Data) 
-        {
-            m_IsFlipped = false;
-            m_Content = i_Data;
         }
 
         public void FlipCard()

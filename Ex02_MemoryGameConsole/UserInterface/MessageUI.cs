@@ -8,7 +8,6 @@ namespace Ex02_MemoryGameConsole.UserInterface
 {
     internal class MessageUI
     {
-
         public void PrintWelcomeMessage()
         {
             Console.WriteLine("Welcome to the memory game!");
@@ -28,6 +27,5 @@ namespace Ex02_MemoryGameConsole.UserInterface
         {
             Console.WriteLine("Game closing, bye bye.");
         }
-
     }
 }
