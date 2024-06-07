@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,9 +12,9 @@ namespace Ex02_MemoryGameConsole.GameLogic
     {
         private Card m_Card1;
         private Card m_Card2;
-        private Player m_CurrentPlayer; //אולי שווה להחליף פשוט במערך של שחקנים ובטיפוס השחקן
+        private Player m_CurrentPlayer;
+        
 
-        //אם מוסיפים את השחקן ממש כאן, אז צריך להוריד את הבנאי פה 
         public Turn(Player i_FirstPlayer)
         {
             m_CurrentPlayer = i_FirstPlayer;

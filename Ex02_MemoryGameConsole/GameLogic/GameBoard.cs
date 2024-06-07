@@ -109,9 +109,9 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
             foreach (Card card in m_CardsMatrix)
             {
-                isThereUnflippedCards = card.IsFlipped == false;
-                if (isThereUnflippedCards)
+                if(!card.IsFlipped)
                 {
+                    isThereUnflippedCards = true;
                     break;
                 }
             }
@@ -119,34 +119,32 @@ namespace Ex02_MemoryGameConsole.GameLogic
             return isThereUnflippedCards;
         }
 
-        public Card GetCard(string i_Square)
+        public Card GetCard(int i_Row, int i_Col)
         {
             Card card;
 
-            extractRowAndColFromSquareString(i_Square, out int row, out int col);
-            card = m_CardsMatrix[row-1, col-1];
+            card = m_CardsMatrix[i_Row - 1, i_Col - 1];
 
             return card;
         }
 
-        public bool IsValidSquare(string i_Square, out string o_ErrorMessage)
+        public bool IsValidSquare(int i_Row, int i_Col, out string o_ErrorMessage)
         {
             bool isValid, isOnBoard;
             o_ErrorMessage = null;
 
-            isOnBoard = checkIfSquareOnBoard(i_Square, ref o_ErrorMessage);
-            isValid = isOnBoard && checkIfUnflippedCard(i_Square, ref o_ErrorMessage);
+            isOnBoard = checkIfSquareOnBoard(i_Row, i_Col, ref o_ErrorMessage);
+            isValid = isOnBoard && checkIfUnflippedCard(i_Row, i_Col, ref o_ErrorMessage);
 
             return isValid;
         }
 
-        private bool checkIfSquareOnBoard(string i_Square, ref string io_ErrorMessage)
+        private bool checkIfSquareOnBoard(int i_Row, int i_Col, ref string io_ErrorMessage)
         {
             bool isValidSquare = false, isValidRow, isValidCol;
 
-            extractRowAndColFromSquareString(i_Square, out int row, out int col);
-            isValidRow = row >= 1 && row <= m_Height;
-            isValidCol = col >=1 && col <= m_Width;
+            isValidRow = i_Row >= 1 && i_Row <= m_Height;
+            isValidCol = i_Col >= 1 && i_Col <= m_Width;
             if (!isValidRow)
             {
                 io_ErrorMessage = "Wrong row number. Row must be between 1 and " + m_Height;
@@ -166,9 +164,9 @@ namespace Ex02_MemoryGameConsole.GameLogic
             return isValidSquare;
         }
 
-        private bool checkIfUnflippedCard(string i_Square, ref string io_ErrorMessage)
+        private bool checkIfUnflippedCard(int i_Row, int i_Col, ref string io_ErrorMessage)
         {
-            Card card = GetCard(i_Square);
+            Card card = GetCard(i_Row, i_Col);
             bool isUnflippedCard = !card.IsFlipped;
 
             if (!isUnflippedCard)
@@ -179,13 +177,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
             return isUnflippedCard;
         }
 
-        private void extractRowAndColFromSquareString(string i_Square, out int o_Row, out int o_Col)
-        {
-            char colChar = i_Square[0];
-            char rowChar = i_Square[1];
-            o_Col = (colChar - 'A') + 1;
-            o_Row = rowChar - '0';
-        }
+
 
     }
 }

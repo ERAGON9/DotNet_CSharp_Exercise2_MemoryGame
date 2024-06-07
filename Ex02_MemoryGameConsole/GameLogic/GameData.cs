@@ -13,6 +13,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
                                         //the number of players during the game.
         private GameBoard m_Board;
         private Turn m_CurrentTurn;
+        //private ComputerAI m_ComputerAI;
 
         public GameData(int i_NumOfPlayers, string[] i_PlayersNames,
                         string[] i_PlayersTypes)
@@ -43,10 +44,39 @@ namespace Ex02_MemoryGameConsole.GameLogic
             }
         } 
 
-        public string ComputerChoosingSquare() // Need to create this method!!!!
+        public string ComputerChoosingSquare()
         {
-            return null;
+            Random random = new Random();
+            List<string> availableSquares = new List<string>();
+
+            for (int i = 1; i <= m_Board.Height; i++)
+            {
+                for (int j = 1; j <= m_Board.Width; j++)
+                {
+                    char colChar = (char)('A' + j - 1);
+                    string square = $"{colChar}{i}";
+
+                    if (m_Board.IsValidSquare(i, j, out string errorMessage))
+                    {
+                        availableSquares.Add(square);
+                    }
+                }
+            }
+
+            int randomIndex = random.Next(availableSquares.Count);
+
+            return availableSquares[randomIndex];
         }
+
+        //public string ComputerChoosingSquare2()
+        //{
+        //    Card card1 = m_CurrentTurn.Card1;
+        //    bool isPairDiscovered = m_ComputerAI.IsPairDiscovered(card1.Content);
+        //    if (isPairDiscovered)
+        //    {
+        //        m_ComputerAI.GetPair()
+        //    }
+        //}
 
         public string GetCurrenPlayerType()
         {
@@ -71,24 +101,54 @@ namespace Ex02_MemoryGameConsole.GameLogic
 
         public void FlipCard1InCurrentTurn(string i_Square)
         {
-            CurrentTurn.Card1 = Board.GetCard(i_Square);
-            CurrentTurn.FlipCard1();
+            int row, col;
+
+            extractRowAndColFromSquareString(i_Square, out row, out col);
+            m_CurrentTurn.Card1 = m_Board.GetCard(row, col);
+            m_CurrentTurn.FlipCard1();
+            //m_ComputerAI.RememberCard(m_CurrentTurn.Card1.Content, row, col);
+            //random choosing card1
         }
 
         public void FlipCard2InCurrentTurn(string i_Square)
         {
-            CurrentTurn.Card2 = Board.GetCard(i_Square);
-            CurrentTurn.FlipCard2();
+            int row, col;
+
+            extractRowAndColFromSquareString(i_Square, out row, out col);
+            m_CurrentTurn.Card2 = m_Board.GetCard(row, col);
+            m_CurrentTurn.FlipCard2();
+            //m_ComputerAI.RememberCard(m_CurrentTurn.Card2.Content, row, col);
         }
+
+        //public bool TryInitialBoard(int i_Rows, int i_Cols, out string o_ErrorMessage)
+        //{
+        //    bool isInitialized;
+
+
+        //    isInitialized = m_Board.TryInitialGameBoard(i_Rows, i_Cols, out o_ErrorMessage);
+        //    if (isInitialized)
+        //    {
+        //        m_ComputerAI = new ComputerAI(i_Rows, i_Cols);
+        //    }
+
+        //    return isInitialized;
+        //}
 
         public bool TryInitialBoard(int i_Rows, int i_Cols, out string o_ErrorMessage)
         {
-            return Board.TryInitialGameBoard(i_Rows, i_Cols, out o_ErrorMessage);
+            bool isInitialized;
+
+            isInitialized = m_Board.TryInitialGameBoard(i_Rows, i_Cols, out o_ErrorMessage);
+
+            return isInitialized;
         }
 
         public bool IsValidSquareInput(string i_Square, out string o_Message)
         {
-            return Board.IsValidSquare( i_Square, out o_Message);
+            int row, col;
+
+            extractRowAndColFromSquareString(i_Square, out row, out col);
+            return m_Board.IsValidSquare(row, col, out o_Message);
         }
 
         public string GetPlayerNameOfCurrentTurn()
@@ -140,14 +200,36 @@ namespace Ex02_MemoryGameConsole.GameLogic
             return m_CurrentTurn.CurrentPlayer;
         }
 
-        public void GetPlayersScore(out int[] o_PlayersScores)
+        public int[] GetPlayersScore()
         {
-            o_PlayersScores = new int[m_Players.Count];
+            int[] playersScores = new int[m_Players.Count];
 
             for (int i = 0; i < m_Players.Count; i++)
             {
-                o_PlayersScores[i] = m_Players[i].Points;
+                playersScores[i] = m_Players[i].Points;
             }
+
+            return playersScores;
+        }
+        
+        public string[] GetPlayersNames()
+        {
+            string[] playersNames = new string[m_Players.Count];
+
+            for (int i = 0; i < m_Players.Count; i++)
+            {
+                playersNames[i] = m_Players[i].Name;
+            }
+
+            return playersNames;
+        }
+
+        private void extractRowAndColFromSquareString(string i_Square, out int o_Row, out int o_Col)
+        {
+            char colChar = i_Square[0];
+            char rowChar = i_Square[1];
+            o_Col = (colChar - 'A') + 1;
+            o_Row = rowChar - '0';
         }
     }
 }

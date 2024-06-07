@@ -16,7 +16,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
         {
             m_Name = i_PlayerName;
             m_Points = 0;
-            m_type = getPlayerTypeFromString(i_PlayerType);
+            m_type = extractPlayerTypeFromString(i_PlayerType);
         }
 
         public string Name 
@@ -48,7 +48,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
             m_Points++;
         }
 
-        private ePlayerType getPlayerTypeFromString(string i_PlayerTypeString)
+        private ePlayerType extractPlayerTypeFromString(string i_PlayerTypeString)
         {
             ePlayerType value;
 

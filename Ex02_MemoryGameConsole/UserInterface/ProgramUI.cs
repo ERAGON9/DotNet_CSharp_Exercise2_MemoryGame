@@ -14,7 +14,6 @@ namespace Ex02_MemoryGameConsole.UserInterface
         private MessageUI m_Messages = new MessageUI();
         private BoardUI m_Board = new BoardUI();
         private bool m_ProgramStillRunning = true;
-        //private string m_CurrentUserType = "Person";
 
         private const string k_QuitString = "Q";
         private const int k_NumOfPlayers = 2;
@@ -43,36 +42,20 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
             while (!gameOver)
             {
-                Screen.Clear();
-                m_Board.PrintBoard(m_GameEngine.Board);
-                Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
-                                  " first square:");
-                
-                string chosenSquare1 = chooseSquare();
-                if (isPlayerQuit(chosenSquare1))
+                updateScreenState();
+                firstPartOfTurn();
+                if (!m_ProgramStillRunning)
                 {
-                    quitGame();
                     break;
                 }
 
-                m_GameEngine.FlipCard1InCurrentTurn(chosenSquare1);
-                Screen.Clear();
-                m_Board.PrintBoard(m_GameEngine.Board);
-                Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
-                                  " secound square:");
-                string chosenSquare2 = chooseSquare();
-                if (isPlayerQuit(chosenSquare2))
+                secondPartOfTurn();
+                if (!m_ProgramStillRunning)
                 {
-                    quitGame();
                     break;
                 }
 
-                m_GameEngine.FlipCard2InCurrentTurn(chosenSquare2);
-                Screen.Clear();
-                m_Board.PrintBoard(m_GameEngine.Board);
-
-                OperatesByChosenCards();
-
+                operatesByChosenCards();
                 gameOver = isGameOver();
             }
 
@@ -86,7 +69,47 @@ namespace Ex02_MemoryGameConsole.UserInterface
             }
         }
 
-        private void OperatesByChosenCards()
+        private void firstPartOfTurn()
+        {
+            Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
+                              " first square:");
+
+            //string chosenSquare1 = chooseSquare1();
+            string chosenSquare1 = chooseSquare();
+            if (isPlayerQuit(chosenSquare1))
+            {
+                quitGame();
+                return;
+            }
+
+            m_GameEngine.FlipCard1InCurrentTurn(chosenSquare1);
+            updateScreenState();
+        }
+
+        private void secondPartOfTurn()
+        {
+            Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
+                  " secound square:");
+
+            //string chosenSquare2 = chooseSquare2();
+            string chosenSquare2 = chooseSquare();
+            if (isPlayerQuit(chosenSquare2))
+            {
+                quitGame();
+                return;
+            }
+
+            m_GameEngine.FlipCard2InCurrentTurn(chosenSquare2);
+            updateScreenState();
+        }
+
+        private void updateScreenState()
+        {
+            Screen.Clear();
+            m_Board.PrintBoard(m_GameEngine.Board);
+        }
+
+        private void operatesByChosenCards()
         {
             bool isAPair = m_GameEngine.IsCardsTheSame();
 
@@ -95,22 +118,18 @@ namespace Ex02_MemoryGameConsole.UserInterface
                 m_GameEngine.AddPointToCurrentPlayer();
             }
             else
-            {
-                System.Threading.Thread.Sleep(2000);
+            {  
                 m_GameEngine.UnflippedCardsForCurrentTurn();
                 m_GameEngine.SwitchToNextPlayer();
             }
-            
-            //m_CurrentTurn.ResetCard1();
-            //m_CurrentTurn.ResetCard2();
+
+            System.Threading.Thread.Sleep(2000);
         }
 
         private string chooseSquare()
         {
             string chosenSquare;
-            string currentPlayerType = m_GameEngine.GetCurrenPlayerType(); //maybe enum?
-                //כדי שיעבוד צריך שהשחקן הנוכחי יהיה ממש 'שחקן' ולא מה שיש לנו שם
-                // (enum)
+            string currentPlayerType = m_GameEngine.GetCurrenPlayerType();
                 
             if (currentPlayerType == "Computer")
             {
@@ -136,12 +155,6 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
             return playAgain;
         }
-
-        //private void switchToNextPlayer()
-        //{
-        //    m_GameEngine.SwitchToNextPlayer();
-        //    m_CurrentUserType = m_GameEngine.GetCurrenPlayerType();
-        //}
 
         private void quitGame()
         {
@@ -279,10 +292,12 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private void printStatistics()
         {
-            m_GameEngine.GetPlayersScore(out int[] playersScores);
+            int[] playersScores = m_GameEngine.GetPlayersScore();
+            string[] playersNames = m_GameEngine.GetPlayersNames();
+
             Console.WriteLine("--------GAME OVER--------");
-            Console.WriteLine("Player 1 score: " + playersScores[1] + " points.");
-            Console.WriteLine("Player 2 score: " + playersScores[2] + " points.");
+            Console.WriteLine(playersNames[0] + " score: " + playersScores[0] + " points.");
+            Console.WriteLine(playersNames[1] + " score: " + playersScores[1] + " points.");
         }
     }
 }
