@@ -70,10 +70,9 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private void firstPartOfTurn()
         {
-            Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
-                              " first square:");
-
+            Console.WriteLine("{0} turn, first square:", m_GameEngine.GetPlayerNameOfCurrentTurn());
             string chosenSquare1 = chooseSquare();
+
             if (isPlayerQuit(chosenSquare1))
             {
                 quitGame();
@@ -86,8 +85,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
 
         private void secondPartOfTurn()
         {
-            Console.WriteLine(m_GameEngine.GetPlayerNameOfCurrentTurn() + " turn," +
-                              " secound square:");
+            Console.WriteLine("{0} turn, secound square:", m_GameEngine.GetPlayerNameOfCurrentTurn());
             string chosenSquare2 = chooseSquare();
 
             if (isPlayerQuit(chosenSquare2))
@@ -313,8 +311,8 @@ namespace Ex02_MemoryGameConsole.UserInterface
             string[] playersNames = m_GameEngine.GetPlayersNames();
 
             Console.WriteLine("--------GAME OVER--------");
-            Console.WriteLine(playersNames[0] + " score: " + playersScores[0] + " points.");
-            Console.WriteLine(playersNames[1] + " score: " + playersScores[1] + " points.");
+            Console.WriteLine("{0} score: {1} points.", playersNames[0], playersScores[0]);
+            Console.WriteLine("{0} score: {1} points.", playersNames[1], playersScores[1]);
         }
     }
 }

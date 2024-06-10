@@ -145,13 +145,13 @@ namespace Ex02_MemoryGameConsole.GameLogic
             isValidCol = i_Col >= 1 && i_Col <= m_Width;
             if (!isValidRow)
             {
-                o_ErrorMessage = "Wrong row number. Row must be between 1 and " + m_Height;
+                o_ErrorMessage = string.Format("Wrong row number. Row must be between 1 and {0}.", m_Height);
 
             }
             else if (!isValidCol)
             {
                 char lastColChar = (char)('A' + m_Width - 1);
-                o_ErrorMessage = "Wrong column number. Column must be between A and " + lastColChar;
+                o_ErrorMessage = string.Format("Wrong column number. Column must be between A and {0}.", lastColChar);
             }
             else
             {

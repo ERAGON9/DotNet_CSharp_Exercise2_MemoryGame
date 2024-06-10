@@ -15,7 +15,6 @@ namespace Ex02_MemoryGameConsole.UserInterface
             ProgramUI userInterface = new ProgramUI();
 
             userInterface.RunProgram();
-            Console.ReadLine();
         }
     }
 }

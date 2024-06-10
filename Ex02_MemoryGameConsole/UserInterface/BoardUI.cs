@@ -26,7 +26,7 @@ namespace Ex02_MemoryGameConsole.UserInterface
                                                 boardWidth, out errorMessage);
                 if (!initialSucceeded)
                 {
-                    Console.WriteLine(errorMessage + " try again.");
+                    Console.WriteLine("{0} try again.", errorMessage);
                 }
             }
         }

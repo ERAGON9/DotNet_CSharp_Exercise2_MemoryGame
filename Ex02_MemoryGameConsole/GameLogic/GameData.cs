@@ -13,7 +13,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
                                         //the number of players during the game.
         private GameBoard m_Board;
         private Turn m_CurrentTurn;
-        //private ComputerAI m_ComputerAI;
 
         public GameData(int i_NumOfPlayers, string[] i_PlayersNames,
                         string[] i_PlayersTypes)
@@ -60,16 +59,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
             return availableSquares[randomIndex];
         }
 
-        //public string ComputerChoosingSquare2()
-        //{
-        //    Card card1 = m_CurrentTurn.Card1;
-        //    bool isPairDiscovered = m_ComputerAI.IsPairDiscovered(card1.Content);
-        //    if (isPairDiscovered)
-        //    {
-        //        m_ComputerAI.GetPair()
-        //    }
-        //}
-
         public string GetCurrenPlayerType()
         {
             return getPlayerTypeFromEnum(m_CurrentTurn.CurrentPlayer.Type);
@@ -98,8 +87,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
             extractRowAndColFromSquareString(i_Square, out row, out col);
             m_CurrentTurn.Card1 = m_Board.GetCard(row, col);
             m_CurrentTurn.FlipCard1();
-            //m_ComputerAI.RememberCard(m_CurrentTurn.Card1.Content, row, col);
-            //random choosing card1
         }
 
         public void FlipCard2InCurrentTurn(string i_Square)
@@ -109,22 +96,7 @@ namespace Ex02_MemoryGameConsole.GameLogic
             extractRowAndColFromSquareString(i_Square, out row, out col);
             m_CurrentTurn.Card2 = m_Board.GetCard(row, col);
             m_CurrentTurn.FlipCard2();
-            //m_ComputerAI.RememberCard(m_CurrentTurn.Card2.Content, row, col);
         }
-
-        //public bool TryInitialBoard(int i_Rows, int i_Cols, out string o_ErrorMessage)
-        //{
-        //    bool isInitialized;
-
-
-        //    isInitialized = m_Board.TryInitialGameBoard(i_Rows, i_Cols, out o_ErrorMessage);
-        //    if (isInitialized)
-        //    {
-        //        m_ComputerAI = new ComputerAI(i_Rows, i_Cols);
-        //    }
-
-        //    return isInitialized;
-        //}
 
         public bool TryInitialBoard(int i_Rows, int i_Cols, out string o_ErrorMessage)
         {
