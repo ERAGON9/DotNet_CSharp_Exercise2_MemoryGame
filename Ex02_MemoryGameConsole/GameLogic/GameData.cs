@@ -22,9 +22,6 @@ namespace Ex02_MemoryGameConsole.GameLogic
             {
                 m_Players.Add(new Player(i_PlayersNames[i], i_PlayersTypes[i]));
             }
-
-            m_Board = new GameBoard();
-            m_CurrentTurn = new Turn(m_Players[0]);
         }
 
         public GameBoard Board
@@ -34,6 +31,12 @@ namespace Ex02_MemoryGameConsole.GameLogic
                 return m_Board;
             }
         } 
+
+        public void InitialBoardAndTurn()
+        {
+            m_Board = new GameBoard();
+            m_CurrentTurn = new Turn(m_Players[0]);
+        }
 
         public string ComputerChoosingSquare()
         {

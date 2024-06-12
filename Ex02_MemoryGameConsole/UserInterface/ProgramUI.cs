@@ -20,17 +20,20 @@ namespace Ex02_MemoryGameConsole.UserInterface
         public void RunProgram()
         {
             m_Messages.PrintWelcomeMessage();
+            setGameProperties();
             while (m_ProgramStillRunning)
             {
                 newGame();
             }
+
             m_Messages.PrintGoodbyeMessage();
         }
 
         private void newGame()
         {
+            Screen.Clear();
             m_Messages.PrintNewGameMessage();
-            setGameProperties();
+            m_GameEngine.InitialBoardAndTurn();
             m_Board.SetBoardGame(m_GameEngine);
             runGame();
         }
